@@ -43,30 +43,53 @@ public class Course {
         this.name = name;
     }
 
-    public void addEducationalMaterials(EducationalMaterials educationalMaterials) {
+    //------------------- educationalMaterialsList
+    public void addEducationalMaterialsToList(EducationalMaterials educationalMaterials) {
         educationalMaterialsList.add(educationalMaterials);
     }
 
-    public void removeEducationalMaterials(EducationalMaterials educationalMaterials) {
+    public void removeEducationalMaterialsFromList(EducationalMaterials educationalMaterials) {
         educationalMaterialsList.remove(educationalMaterials);
     }
 
-    public void addStudentList(Student student) {
+    public void setNewEducationalMaterialsList(List<EducationalMaterials> newEducationalMaterialsList) {
+        educationalMaterialsList = newEducationalMaterialsList;
+    }
+    public void deleteEducationalMaterialsList() {
+        educationalMaterialsList = new ArrayList<>();
+    }
+
+    //------------------- studentList
+    public void addStudentToList(Student student) {
         studentList.add(student);
     }
 
-    public void removeStudent(Student student) {
+    public void removeStudentFromList(Student student) {
         studentList.remove(student);
     }
 
-    public void addTestQuestions(TestQuestions testQuestions) {
+    public void setNewStudentList(List<Student> newStudentList) {
+        studentList = newStudentList;
+    }
+    public void deleteStudentList() {
+        studentList = new ArrayList<>();
+    }
+
+    //------------------- testQuestionsList
+    public void addTestQuestionsToList(TestQuestions testQuestions) {
         testQuestionsList.add(testQuestions);
     }
 
-    public void removeTestQuestions(TestQuestions testQuestions) {
+    public void removeTestQuestionsFromList(TestQuestions testQuestions) {
         testQuestionsList.remove(testQuestions);
     }
 
+    public void setNewTestQuestionsList(List<TestQuestions> newTestQuestionsList) {
+        testQuestionsList = newTestQuestionsList;
+    }
+    public void deleteTestQuestionsList() {
+        testQuestionsList = new ArrayList<>();
+    }
 
     @Override
     public String toString() {
