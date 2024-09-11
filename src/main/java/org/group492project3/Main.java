@@ -1,7 +1,9 @@
 package org.group492project3;
 
+import org.group492project3.frontEnd.userMenu.UserInterface;
+
 public class Main {
     public static void main(String[] args) {
-    //here should be start menu
+        UserInterface userInterface = new UserInterface();
     }
 }
