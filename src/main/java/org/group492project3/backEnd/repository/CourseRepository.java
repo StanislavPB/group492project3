@@ -1,7 +1,9 @@
 package org.group492project3.backEnd.repository;
 
 import org.group492project3.backEnd.entity.Course;
+import org.group492project3.backEnd.entity.EducationalMaterials;
 import org.group492project3.backEnd.entity.Student;
+import org.group492project3.backEnd.entity.TestQuestions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ public class CourseRepository {
     private Integer idCourse = 0;
 
     public Course addCourse(String nameCourse) {
-        idCourse++;
+        idCourse = databaseCourse.size()+1;
         Course courseForSave = new Course(idCourse,nameCourse);
         databaseCourse.add(courseForSave);
         return courseForSave;
@@ -37,29 +39,68 @@ public class CourseRepository {
                 .toList();
     }
 
+    public Course deleteCourse(Course courseForDelete) {
+        databaseCourse.remove(courseForDelete);
+        return courseForDelete;
+    }
+
     //Изменяет только поле "name"
-    public Course updateNote(Course courseForUpdate) {
-
+    public Course updateCourse(Course courseForUpdate) {
         courseForUpdate.setName(courseForUpdate.getName());
-
         return courseForUpdate;
     }
-
-    //добавление EducationalMaterials
-
-    //добавление студента к курсу VOID!!!!
-    public void setNewStudent(Course course, Student student){
-        course.addStudentList(student);
+    //---------------------------------------   EducationalMaterials ------------------------------------
+    //добавление EducationalMaterials к курсу
+    public void addEducationalMaterialsToCourse(Course course, EducationalMaterials educationalMaterials){
+        course.addEducationalMaterialsToList(educationalMaterials);
     }
+    //удаление EducationalMaterials из курса
+    public void removeEducationalMaterialsFromCourse(Course course, EducationalMaterials educationalMaterials){
+        course.removeEducationalMaterialsFromList(educationalMaterials);
+    }
+    //полное обновление всех EducationalMaterials LIST в курсе
+    public void setEducationalMaterialsToCourse(Course course, List <EducationalMaterials> educationalMaterialsList){
+        course.setNewEducationalMaterialsList(educationalMaterialsList);
+    }
+    //полное удаление EducationalMaterials LIST в курсе
+    public void deleteEducationalMaterialsList(Course course) {
+        course.deleteEducationalMaterialsList();
+    }
+
+    //---------------------------------------   Student ------------------------------------
+    //добавление студента к курсу
+    public void addNewStudentToCourse(Course course, Student student){
+        course.addStudentToList(student);
+    }
+    //удаление студента из курса
     public void removeStudentFromCourse(Course course, Student student){
-        course.removeStudent(student);
+        course.removeStudentFromList(student);
+    }
+    //полное обновление всех Student LIST в курсе
+    public void setNewStudentList(Course course, List <Student> studentList){
+        course.setNewStudentList(studentList);
+    }
+    //полное удаление Student LIST в курсе
+    public void deleteStudentList(Course course) {
+        course.deleteStudentList();
     }
 
-    //добавление TestQuestions
-
-
-
-
-
+    //---------------------------------------   TestQuestions ------------------------------------
+    //добавление TestQuestions к курсу
+    public void addTestQuestionsToCourse(Course course, TestQuestions testQuestions){
+        course.addTestQuestionsToList(testQuestions);
+    }
+    //удаление TestQuestions из курса
+    public void removeTestQuestionsFromCourse(Course course, TestQuestions testQuestions){
+        course.removeTestQuestionsFromList(testQuestions);
+    }
+    //полное обновление всех TestQuestions LIST в курсе
+    public void setNewTestQuestionsList(Course course, List <TestQuestions> testQuestionsList){
+        course.setNewTestQuestionsList(testQuestionsList);
+    }
+    //полное удаление TestQuestions LIST в курсе
+    public void deleteTestQuestionsList(Course course) {
+        course.deleteTestQuestionsList();
+    }
 
 }
