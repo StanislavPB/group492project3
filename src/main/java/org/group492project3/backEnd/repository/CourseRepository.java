@@ -14,7 +14,7 @@ public class CourseRepository {
     private Integer idCourse = 0;
 
     public Course addCourse(String nameCourse) {
-        idCourse++;
+        idCourse = databaseCourse.size()+1;
         Course courseForSave = new Course(idCourse,nameCourse);
         databaseCourse.add(courseForSave);
         return courseForSave;
@@ -45,7 +45,7 @@ public class CourseRepository {
     }
 
     //Изменяет только поле "name"
-    public Course updateNote(Course courseForUpdate) {
+    public Course updateCourse(Course courseForUpdate) {
         courseForUpdate.setName(courseForUpdate.getName());
         return courseForUpdate;
     }
