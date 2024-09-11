@@ -1,7 +1,11 @@
 package org.group492project3.frontEnd.userMenu;
 
 public class AdminMenu {
-    private void goToAdminMenu() {
+    public void startMenu() {
+
+    }
+
+    /*private void goToAdminMenu() {
         switch (userInput.getInt(
                 decor.getDecorativeLineWithWord("ADMIN MENU") +
                         "\nEnter number of item to continue:\n" +
@@ -37,5 +41,5 @@ public class AdminMenu {
                 goToAdminMenu();
             }
         }
-    }
+    }*/
 }

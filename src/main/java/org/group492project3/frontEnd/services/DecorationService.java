@@ -31,10 +31,10 @@ public class DecorationService {
     public String getDecoratedUserMenu(String menuText, String menuTitle) {
         menuText = menuText.trim();
         String formatedMenu;
-        if (menuTitle.isEmpty() || menuTitle == null) {
-            formatedMenu = getDecorativeLine() + "\n";
+        if (menuTitle.isEmpty()) {
+            formatedMenu = getDecorativeLine() + "\n" + "Enter number of item to continue\n";
         } else {
-            formatedMenu = getDecorativeLineWithWord(menuTitle) + "\n";
+            formatedMenu = getDecorativeLineWithWord(menuTitle) + "\n" + "Enter number of item to continue\n";
         }
         String[] itemsOfMenu = menuText.split(";");
 

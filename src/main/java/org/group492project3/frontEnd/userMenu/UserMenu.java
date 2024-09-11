@@ -1,9 +1,7 @@
 package org.group492project3.frontEnd.userMenu;
 
-import org.group492project3.backEnd.dto.LoginUserResponse;
-import org.group492project3.backEnd.dto.NewUserRequest;
-import org.group492project3.backEnd.dto.Response;
 import org.group492project3.backEnd.API.Api;
+import org.group492project3.backEnd.dto.LoginUserResponse;
 import org.group492project3.frontEnd.services.DecorationService;
 import org.group492project3.frontEnd.services.MessageService;
 import org.group492project3.frontEnd.services.UserInputService;
@@ -13,13 +11,18 @@ public class UserMenu {
     private final Api api = new Api();
     private final MessageService message = new MessageService();
     private final DecorationService decor = new DecorationService();
-    private int userID = 0;
+    private LoginUserResponse userData = null;
 
-    public UserMenu() {
+    private void rememberUserData(LoginUserResponse userData) {
+        this.userData = userData;
+    }
+
+    public void startMenu(LoginUserResponse userData) {
+        rememberUserData(userData);
 
     }
 
-
+/*
 
 
 
@@ -74,9 +77,9 @@ public class UserMenu {
         } else {
             message.printErrorMessage(findingResult.getDescription());
             findCourseByName();
-        }*/
+        }
     }
-    /*
+
     *  Course courseAfterEditing = editCourse(findingResult.getElementOfOperation());
             Response<Course, ArrayList<String>> resultOfUpdating = api.updateCourse(courseAfterEditing);
             if (resultOfUpdating.getStatusOfOperation()) {
@@ -85,16 +88,16 @@ public class UserMenu {
             } else {
                 message.printErrorMessage(resultOfUpdating.getDescription().toString());
                 findCourseByName();
-            }*/
+
     //! TODOFinish this metod
-    /*
+
 
     private Course editCourse(Course courseForAdding) {
         Course oldVersionOfCourse = courseForAdding;
         editCourseNameMenu();
         return null;
     }
-    */
+
 
     private void editCourseNameMenu() {
         switch (userInput.getInt(
@@ -123,7 +126,7 @@ public class UserMenu {
         userID = 0;
         startUserInterface();
     }
-/*
+
     private Response<String, String> editNameOfCourse() {
     }*/
 }

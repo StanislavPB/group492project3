@@ -2,31 +2,28 @@ package org.group492project3.frontEnd.userMenu;
 
 import org.group492project3.backEnd.API.Api;
 import org.group492project3.backEnd.dto.LoginUserResponse;
+import org.group492project3.backEnd.dto.RegistrationResponce;
 import org.group492project3.backEnd.dto.Response;
 import org.group492project3.frontEnd.services.DecorationService;
 import org.group492project3.frontEnd.services.MessageService;
 import org.group492project3.frontEnd.services.UserInputService;
 
-public class LoginMenu {
-    private final Api api = new Api();
+public class Registration {
+    private final DecorationService decor = new DecorationService();
     private final UserInputService userInput = new UserInputService();
     private final MessageService message = new MessageService();
-    private final DecorationService decor = new DecorationService();
-    private final AdminMenu adminMenu = new AdminMenu();
     private final UserMenu userMenu = new UserMenu();
+    private final Api api = new Api();
 
     public void startMenu() {
-        decor.printDecorativeLineWithWord("LOGIN MENU");
-        Response<LoginUserResponse, String> loginResult = api.authorisation(userInput.getString("Enter login:"), userInput.getString("Enter password:"));
+        decor.printDecorativeLineWithWord("REGISTRATION MENU");
+        Response<RegistrationResponce, String> registrationResult = api.registration(userInput.getString("Enter login:"), userInput.getString("Enter password:"), userInput.getString("Enter first name:"), userInput.getString("Enter second name:"));
         decor.printDecorativeLine();
-        if (loginResult.getStatusOfOperation()) {
-            if (loginResult.getElementOfOperation().getRole().equals("admin")) {
-                adminMenu.startMenu();
-            } else {
-                userMenu.startMenu(loginResult.getElementOfOperation());
-            }
+        if (registrationResult.getStatusOfOperation()) {
+            LoginUserResponse autoLoginAfterRegistration = new LoginUserResponse(registrationResult.getElementOfOperation().getUserID(), "user", registrationResult.getElementOfOperation().getFirstName(), registrationResult.getElementOfOperation().getSecondName());
+            userMenu.startMenu(autoLoginAfterRegistration);
         } else {
-            message.printErrorMessage(loginResult.getDescription());
+            message.printErrorMessage(registrationResult.getDescription());
             tryAgainMenu();
         }
     }
