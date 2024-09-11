@@ -69,7 +69,7 @@ public class CourseRepository {
 
     //---------------------------------------   Student ------------------------------------
     //добавление студента к курсу
-    public void addNewStudentToCourse(Course course, Student student){
+    public void addStudentToCourse(Course course, Student student){
         course.addStudentToList(student);
     }
     //удаление студента из курса
