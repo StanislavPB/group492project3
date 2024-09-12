@@ -8,13 +8,19 @@ import java.util.List;
 public class EdMatRepository {
 
     private List<EducationalMaterials> materials = new ArrayList<>();
-    private Integer getiIdMaterials = 0;
 
     public EducationalMaterials addMaterial(Integer idOfCourse, String materialType, String materialDescription) {
-        getiIdMaterials = materials.size()+1;
-        EducationalMaterials materialsForSave = new EducationalMaterials(idOfCourse, materialType, materialDescription);
+
+        EducationalMaterials materialsForSave = new EducationalMaterials((materials.size()+1), idOfCourse, materialType, materialDescription);
         materials.add(materialsForSave);
         return materialsForSave;
+    }
+
+    public List<EducationalMaterials> getEducationalMaterialsForCourse(Integer idCourse) {
+
+        return materials.stream()
+                .filter(edMat -> edMat.getIdOfCourse().equals(idCourse))
+                .toList();
     }
 
     public EducationalMaterials findByMaterialsId(Integer idOfMaterial) {
@@ -35,7 +41,7 @@ public class EdMatRepository {
         for (EducationalMaterials currentItem : materials) {
             if (currentItem.equals(materialForDelete)) {
                 materials.remove(materialForDelete);
-                System.out.println("Материал успешно удалён.");
+                //System.out.println("Материал успешно удалён.");
             }
         } return null;
 
