@@ -1,6 +1,7 @@
 package org.group492project3.frontEnd.userMenu;
 
 import org.group492project3.backEnd.API.Api;
+import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.LoginUserResponse;
 import org.group492project3.backEnd.dto.Response;
 import org.group492project3.frontEnd.services.DecorationService;
@@ -23,7 +24,7 @@ public class LoginMenu {
             if (loginResult.getElementOfOperation().getRole().equals("admin")) {
                 adminMenu.startMenu();
             } else {
-                userMenu.startMenu(loginResult.getElementOfOperation());
+                userMenu.start(getCurrentUserInfo(loginResult.getElementOfOperation()));
             }
         } else {
             message.printErrorMessage(loginResult.getDescription());
@@ -46,5 +47,9 @@ public class LoginMenu {
                 tryAgainMenu();
             }
         }
+    }
+
+    private CurrentUser getCurrentUserInfo(LoginUserResponse responseData) {
+        return new CurrentUser(responseData.getUserId(), responseData.getFirstName(), responseData.getSecondName());
     }
 }

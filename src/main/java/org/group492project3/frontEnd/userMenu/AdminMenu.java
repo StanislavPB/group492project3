@@ -1,7 +1,109 @@
 package org.group492project3.frontEnd.userMenu;
 
+import org.group492project3.backEnd.API.Api;
+import org.group492project3.backEnd.dto.AddCourseRequest;
+import org.group492project3.backEnd.dto.Response;
+import org.group492project3.backEnd.entity.Course;
+import org.group492project3.frontEnd.services.DecorationService;
+import org.group492project3.frontEnd.services.MessageService;
+import org.group492project3.frontEnd.services.UserInputService;
+
+import java.util.List;
+
 public class AdminMenu {
+    DecorationService decor = new DecorationService();
+    MessageService message = new MessageService();
+    UserInputService userInput = new UserInputService();
+    Api api = new Api();
+
     public void startMenu() {
+        welcome();
+        start();
+    }
+
+    public void welcome() {
+        decor.printWelcomeMessage("ADMIN", "");
+    }
+
+    public void start() {
+        decor.printDecoratedMenu("1.Courses.;2.Find course by name.;3.Get courses list.;4.Add data for testing.;0.Exit.", "ADMIN");
+        int userChoice = userInput.getInt();
+        switch (userChoice) {
+            case 1: {
+                NewCourseMenu();
+                break;
+            }
+            case 2: {
+                findCourseByName();
+                break;
+            }
+            case 3: {
+                getCoursesList();//! :TODO:
+                break;
+            }
+            case 4: {
+                addDataForTesting();//! TODO:
+                break;
+            }
+            case 0: {
+                exit();
+                break;
+            }
+            default: {
+                message.printErrorMessage("Incorrect input.Try again.");
+                start();
+            }
+
+        }
+
+    }
+
+    public void NewCourseMenu() {
+        Response<Course, String> response = api.addNewCourse(new AddCourseRequest(userInput.getString("Enter name of new course:")));
+        if (response.getStatusOfOperation()) {
+            message.printSuccessMessage("New course was successfully created.");
+        } else {
+            message.printErrorMessage(response.getDescription());
+        }
+        decor.printDecoratedMenu("1.Try again.;0.Exit.", "");
+        int userChoice = userInput.getInt();
+        switch (userChoice) {
+            case 1: {
+                NewCourseMenu();
+                break;
+            }
+            case 0: {
+                start();
+                break;
+            }
+            default: {
+                message.printErrorMessage("Incorrect input");
+                NewCourseMenu();
+                break;
+            }
+        }
+    }
+
+    public void findCourseByName() {
+
+    }
+
+    public void getCoursesList() {
+        Response<List<Course>, String> response = api.getCoursesList();
+        if (response.getStatusOfOperation()) {
+            for (int i = 0; i < response.getElementOfOperation().size(); i++) {
+                System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
+            }
+        } else {
+            message.printErrorMessage(response.getDescription());
+        }
+    }
+
+    public void addDataForTesting() {
+
+    }
+
+    public void exit() {
 
     }
 

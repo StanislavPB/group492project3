@@ -21,10 +21,12 @@ public class AuthMenu {
         switch (userChoice) {
             case 1: {
                 login.startMenu();
+                startMenu();
                 break;
             }
             case 2: {
                 registration.startMenu();
+                startMenu();
                 break;
             }
             default: {

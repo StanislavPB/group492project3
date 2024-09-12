@@ -5,6 +5,11 @@ public class DecorationService {
     private static final String GREEN_COLOR_FOR_TEXT = "\033[0;32m";
     private static final String STANDARD_COLOR_FOR_TEXT = "\033[0m";
     private static final String YELLOW_COLOR_FOR_TEXT = "\033[0;33m";
+    public static final String CYAN_COLOR_FOR_TEXT = "\033[0;36m";
+
+    public void printWelcomeMessage(String firstName, String secondName) {
+        System.out.println(getCyanText("***") + getGreenText("Welcome to see you ") + getEloyText(firstName + " " + secondName) + getCyanText("***"));
+    }
 
     public String getDecorativeLine() {
         return "--------------------------------------------------";
@@ -60,5 +65,9 @@ public class DecorationService {
 
     public String getEloyText(String text) {
         return (YELLOW_COLOR_FOR_TEXT + text + STANDARD_COLOR_FOR_TEXT);
+    }
+
+    public String getCyanText(String text) {
+        return (CYAN_COLOR_FOR_TEXT + text + STANDARD_COLOR_FOR_TEXT);
     }
 }

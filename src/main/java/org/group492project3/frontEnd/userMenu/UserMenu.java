@@ -1,24 +1,112 @@
 package org.group492project3.frontEnd.userMenu;
 
 import org.group492project3.backEnd.API.Api;
-import org.group492project3.backEnd.dto.LoginUserResponse;
+import org.group492project3.backEnd.dto.CurrentUser;
+import org.group492project3.backEnd.dto.Response;
+import org.group492project3.backEnd.entity.Course;
 import org.group492project3.frontEnd.services.DecorationService;
 import org.group492project3.frontEnd.services.MessageService;
 import org.group492project3.frontEnd.services.UserInputService;
+
+import java.util.List;
 
 public class UserMenu {
     private final UserInputService userInput = new UserInputService();
     private final Api api = new Api();
     private final MessageService message = new MessageService();
     private final DecorationService decor = new DecorationService();
-    private LoginUserResponse userData = null;
+    private CurrentUser userData = null;
 
-    private void rememberUserData(LoginUserResponse userData) {
+    private void rememberUserDataAndWelcome(CurrentUser userData) {
         this.userData = userData;
+        decor.printWelcomeMessage(this.userData.getFirstName(), this.userData.getSecondName());
     }
 
-    public void startMenu(LoginUserResponse userData) {
-        rememberUserData(userData);
+    public void start(CurrentUser userData) {
+        rememberUserDataAndWelcome(userData);
+        startMenu(userData);
+    }
+
+    private void startMenu(CurrentUser userData) {
+
+        decor.printDecoratedMenu("1.Sign up for a course.;2.Get a list of my courses.;3.My progress analytic.;0. Log out.", "STUDENT MENU");
+        int userChoice = userInput.getInt();
+        switch (userChoice) {
+            case 1: {
+                getCourseList();
+                break;
+            }
+            case 2: {
+                getMyCoursesList();
+                break;
+            }
+            case 3: {
+                getMyProgressAnalytic();
+                break;
+            }
+            case 0: {
+                exit(); //! add logic maybe with deleting user data
+                break;
+            }
+            default: {
+                message.printErrorMessage("Incorrect input");
+                tryAgainMenu();
+                break;
+            }
+        }
+    }
+
+    private void getCourseList() {
+        Response<List<Course>, String> response = api.getCoursesList();
+        if (response.getStatusOfOperation()) {
+            for (int i = 0; i < response.getElementOfOperation().size(); i++) {
+                System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
+            }
+        } else {
+            message.printErrorMessage(response.getDescription());
+        }
+    }
+
+    private void getMyCoursesList() {
+        Response<List<Course>, String> response = api.getMyCoursesList(userData.getUserId());
+        if (response.getStatusOfOperation()) {
+            for (int i = 0; i < response.getElementOfOperation().size(); i++) {
+                System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
+            }
+        } else {
+            message.printErrorMessage(response.getDescription());
+        }
+    }
+
+    private void getMyProgressAnalytic() {
+        Response<List<Course>, String> response = api.getMyAnalytic(userData.getUserId());
+        if (response.getStatusOfOperation()) {
+            for (int i = 0; i < response.getElementOfOperation().size(); i++) {
+                System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
+            }
+        } else {
+            message.printErrorMessage(response.getDescription());
+        }
+    }
+
+    private void tryAgainMenu() {
+        decor.printDecoratedMenu("1.Try again.;0.Go back.", "");
+        int userChoice = userInput.getInt();
+        switch (userChoice) {
+            case 1: {
+                startMenu(userData);
+            }
+            case 0: {
+                break;
+            }
+            default: {
+                message.printErrorMessage("Incorrect input. Try again.");
+                tryAgainMenu();
+            }
+        }
+    }
+
+    private void exit(){
 
     }
 

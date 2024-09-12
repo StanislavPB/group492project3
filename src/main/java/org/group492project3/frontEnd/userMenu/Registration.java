@@ -1,7 +1,7 @@
 package org.group492project3.frontEnd.userMenu;
 
 import org.group492project3.backEnd.API.Api;
-import org.group492project3.backEnd.dto.LoginUserResponse;
+import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.RegistrationResponce;
 import org.group492project3.backEnd.dto.Response;
 import org.group492project3.frontEnd.services.DecorationService;
@@ -20,8 +20,7 @@ public class Registration {
         Response<RegistrationResponce, String> registrationResult = api.registration(userInput.getString("Enter login:"), userInput.getString("Enter password:"), userInput.getString("Enter first name:"), userInput.getString("Enter second name:"));
         decor.printDecorativeLine();
         if (registrationResult.getStatusOfOperation()) {
-            LoginUserResponse autoLoginAfterRegistration = new LoginUserResponse(registrationResult.getElementOfOperation().getUserID(), "user", registrationResult.getElementOfOperation().getFirstName(), registrationResult.getElementOfOperation().getSecondName());
-            userMenu.startMenu(autoLoginAfterRegistration);
+           userMenu.start(getCurrentUserInfoForAutoLogin(registrationResult.getElementOfOperation()));
         } else {
             message.printErrorMessage(registrationResult.getDescription());
             tryAgainMenu();
@@ -43,5 +42,9 @@ public class Registration {
                 tryAgainMenu();
             }
         }
+    }
+
+    private CurrentUser getCurrentUserInfoForAutoLogin(RegistrationResponce responseData) {
+        return new CurrentUser(responseData.getUserID(), responseData.getFirstName(), responseData.getSecondName());
     }
 }
