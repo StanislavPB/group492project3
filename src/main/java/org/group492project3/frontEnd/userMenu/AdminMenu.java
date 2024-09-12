@@ -5,6 +5,7 @@ import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.AddCourseRequest;
 import org.group492project3.backEnd.dto.Response;
 import org.group492project3.backEnd.entity.Course;
+import org.group492project3.backEnd.service.fill.FillCourse;
 import org.group492project3.frontEnd.services.DecorationService;
 import org.group492project3.frontEnd.services.MessageService;
 import org.group492project3.frontEnd.services.UserInputService;
@@ -103,6 +104,8 @@ public class AdminMenu {
 
     public void addDataForTesting() {
 
+        FillCourse fillCourse = new FillCourse(cont);
+        fillCourse.fillCourseJava();
     }
 
     public void exit() {

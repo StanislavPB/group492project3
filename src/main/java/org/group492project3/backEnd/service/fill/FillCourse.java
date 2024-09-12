@@ -1,5 +1,6 @@
 package org.group492project3.backEnd.service.fill;
 
+import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.Response;
 import org.group492project3.backEnd.entity.Course;
 import org.group492project3.backEnd.entity.TestQuestions;
@@ -12,14 +13,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FillCourse {
+    Container cont;
 
-    CourseRepository courseRepository = new CourseRepository();
-    CourseValidation courseValidation = new CourseValidation();
-    CourseService courseService = new CourseService(courseRepository, courseValidation);
+    public FillCourse(Container cont) {
+        this.cont = cont;
+    }
 
     public void fillCourseJava(){
 
-        Response<Course,String> courseJavaResponse = courseService.addNewCourse("Java");
+        Response<Course,String> courseJavaResponse = cont.courseService.addNewCourse("Java");
 
         if(courseJavaResponse.getStatusOfOperation()){
 
@@ -68,7 +70,7 @@ public class FillCourse {
             ////заполнить материалы
 
 
-            // добавить созданных ранее студентов
+            // добавить студентов
 
         }
     }
