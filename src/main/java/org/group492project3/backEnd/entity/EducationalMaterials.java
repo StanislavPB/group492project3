@@ -7,7 +7,6 @@ public class EducationalMaterials {
     private String materialType;
     private String materialDescription;
 
-
     public Integer getIdOfCourse() {
         return idOfCourse;
     }
@@ -24,10 +23,6 @@ public class EducationalMaterials {
         return materialType;
     }
 
-    public void setIdOfMaterial(Integer idOfMaterial) {
-        this.idOfMaterial = idOfMaterial;
-    }
-
     public void setMaterialDescription(String materialDescription) {
         this.materialDescription = materialDescription;
     }
@@ -36,7 +31,7 @@ public class EducationalMaterials {
         this.materialType = materialType;
     }
 
-    public EducationalMaterials(Integer idOfCourse, String materialType, String materialDescription) {
+    public EducationalMaterials(Integer idOfMaterial, Integer idOfCourse, String materialType, String materialDescription) {
         this.idOfCourse = idOfCourse;
         this.idOfMaterial = idOfMaterial;
         this.materialDescription = materialDescription;
