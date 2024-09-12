@@ -2,6 +2,9 @@ package org.group492project3.backEnd.service;
 
 import org.group492project3.backEnd.dto.Response;
 import org.group492project3.backEnd.entity.Course;
+import org.group492project3.backEnd.entity.EducationalMaterials;
+import org.group492project3.backEnd.entity.Student;
+import org.group492project3.backEnd.entity.TestQuestions;
 import org.group492project3.backEnd.repository.CourseRepository;
 import org.group492project3.backEnd.service.validation.CourseValidation;
 
@@ -87,6 +90,59 @@ public class CourseService {
 
     }
 
+    //---------------------------------------   EducationalMaterials ------------------------------------
+    //добавление EducationalMaterials к курсу
+    public void addEducationalMaterialsToCourse(Course course, EducationalMaterials educationalMaterials){
+        repository.addEducationalMaterialsToCourse(course,educationalMaterials);
+    }
+    //удаление EducationalMaterials из курса
+    public void removeEducationalMaterialsFromCourse(Course course, EducationalMaterials educationalMaterials){
+        repository.removeEducationalMaterialsFromCourse(course,educationalMaterials);
+    }
+    //полное обновление всех EducationalMaterials LIST в курсе
+    public void setEducationalMaterialsToCourse(Course course, List <EducationalMaterials> educationalMaterialsList){
+        repository.setEducationalMaterialsToCourse(course, educationalMaterialsList);
+    }
+    //полное удаление EducationalMaterials LIST в курсе
+    public void deleteEducationalMaterialsList(Course course) {
+        repository.deleteEducationalMaterialsList(course);
+    }
+
+    //---------------------------------------   Student ------------------------------------
+    //добавление студента к курсу
+    public void addNewStudentToCourse(Course course, Student student){
+        repository.addNewStudentToCourse(course, student);
+    }
+    //удаление студента из курса
+    public void removeStudentFromCourse(Course course, Student student){
+        repository.removeStudentFromCourse(course, student);
+    }
+    //полное обновление всех Student LIST в курсе
+    public void setNewStudentList(Course course, List <Student> studentList){
+        repository.setNewStudentList(course, studentList);
+    }
+    //полное удаление Student LIST в курсе
+    public void deleteStudentList(Course course) {
+        repository.deleteStudentList(course);
+    }
+
+    //---------------------------------------   TestQuestions ------------------------------------
+    //добавление TestQuestions к курсу
+    public void addTestQuestionsToCourse(Course course, TestQuestions testQuestions){
+        repository.addTestQuestionsToCourse(course, testQuestions);
+    }
+    //удаление TestQuestions из курса
+    public void removeTestQuestionsFromCourse(Course course, TestQuestions testQuestions){
+        repository.removeTestQuestionsFromCourse(course, testQuestions);
+    }
+    //полное обновление всех TestQuestions LIST в курсе
+    public void setNewTestQuestionsList(Course course, List <TestQuestions> testQuestionsList){
+        repository.setNewTestQuestionsList(course, testQuestionsList);
+    }
+    //полное удаление TestQuestions LIST в курсе
+    public void deleteTestQuestionsList(Course course) {
+        repository.deleteTestQuestionsList(course);
+    }
 
 
 }
