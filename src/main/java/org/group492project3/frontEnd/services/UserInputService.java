@@ -9,6 +9,11 @@ public class UserInputService {
         return in.nextInt();
     }
 
+    public int getInt() {
+        Scanner in = new Scanner(System.in);
+        return in.nextInt();
+    }
+
     public String getString(String text) {
         System.out.print(text);
         Scanner in = new Scanner(System.in);
