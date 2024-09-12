@@ -1,35 +1,34 @@
 package org.group492project3.frontEnd.userMenu;
 
-import org.group492project3.backEnd.API.Api;
+import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.RegistrationResponce;
 import org.group492project3.backEnd.dto.Response;
-import org.group492project3.frontEnd.services.DecorationService;
-import org.group492project3.frontEnd.services.MessageService;
-import org.group492project3.frontEnd.services.UserInputService;
 
 public class Registration {
-    private final DecorationService decor = new DecorationService();
-    private final UserInputService userInput = new UserInputService();
-    private final MessageService message = new MessageService();
-    private final UserMenu userMenu = new UserMenu();
-    private final Api api = new Api();
+    Container cont;
+    private final UserMenu userMenu;
+
+    public Registration(Container cont) {
+        userMenu = new UserMenu(cont);
+        this.cont = cont;
+    }
 
     public void startMenu() {
-        decor.printDecorativeLineWithWord("REGISTRATION MENU");
-        Response<RegistrationResponce, String> registrationResult = api.registration(userInput.getString("Enter login:"), userInput.getString("Enter password:"), userInput.getString("Enter first name:"), userInput.getString("Enter second name:"));
-        decor.printDecorativeLine();
+        cont.decor.printDecorativeLineWithWord("REGISTRATION MENU");
+        Response<RegistrationResponce, String> registrationResult = cont.api.registration(cont.userInput.getString("Enter login:"), cont.userInput.getString("Enter password:"), cont.userInput.getString("Enter first name:"), cont.userInput.getString("Enter second name:"));
+        cont.decor.printDecorativeLine();
         if (registrationResult.getStatusOfOperation()) {
-           userMenu.start(getCurrentUserInfoForAutoLogin(registrationResult.getElementOfOperation()));
+            userMenu.start(getCurrentUserInfoForAutoLogin(registrationResult.getElementOfOperation()));
         } else {
-            message.printErrorMessage(registrationResult.getDescription());
+            cont.message.printErrorMessage(registrationResult.getDescription());
             tryAgainMenu();
         }
     }
 
     private void tryAgainMenu() {
-        decor.printDecoratedMenu("1.Try again.;0.Go back.", "");
-        int userChoice = userInput.getInt();
+        cont.decor.printDecoratedMenu("1.Try again.;0.Go back.", "");
+        int userChoice = cont.userInput.getInt();
         switch (userChoice) {
             case 1: {
                 startMenu();
@@ -38,7 +37,7 @@ public class Registration {
                 break;
             }
             default: {
-                message.printErrorMessage("Incorrect input. Try again.");
+                cont.message.printErrorMessage("Incorrect input. Try again.");
                 tryAgainMenu();
             }
         }

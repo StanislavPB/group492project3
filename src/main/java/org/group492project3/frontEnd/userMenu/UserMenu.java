@@ -1,25 +1,23 @@
 package org.group492project3.frontEnd.userMenu;
 
-import org.group492project3.backEnd.API.Api;
+import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.Response;
 import org.group492project3.backEnd.entity.Course;
-import org.group492project3.frontEnd.services.DecorationService;
-import org.group492project3.frontEnd.services.MessageService;
-import org.group492project3.frontEnd.services.UserInputService;
 
 import java.util.List;
 
 public class UserMenu {
-    private final UserInputService userInput = new UserInputService();
-    private final Api api = new Api();
-    private final MessageService message = new MessageService();
-    private final DecorationService decor = new DecorationService();
+    Container cont;
     private CurrentUser userData = null;
+
+    public UserMenu(Container cont) {
+        this.cont = cont;
+    }
 
     private void rememberUserDataAndWelcome(CurrentUser userData) {
         this.userData = userData;
-        decor.printWelcomeMessage(this.userData.getFirstName(), this.userData.getSecondName());
+        cont.decor.printWelcomeMessage(this.userData.getFirstName(), this.userData.getSecondName());
     }
 
     public void start(CurrentUser userData) {
@@ -29,8 +27,8 @@ public class UserMenu {
 
     private void startMenu(CurrentUser userData) {
 
-        decor.printDecoratedMenu("1.Sign up for a course.;2.Get a list of my courses.;3.My progress analytic.;0. Log out.", "STUDENT MENU");
-        int userChoice = userInput.getInt();
+        cont.decor.printDecoratedMenu("1.Sign up for a course.;2.Get a list of my courses.;3.My progress analytic.;0. Log out.", "STUDENT MENU");
+        int userChoice = cont.userInput.getInt();
         switch (userChoice) {
             case 1: {
                 getCourseList();
@@ -49,7 +47,7 @@ public class UserMenu {
                 break;
             }
             default: {
-                message.printErrorMessage("Incorrect input");
+                cont.message.printErrorMessage("Incorrect input");
                 tryAgainMenu();
                 break;
             }
@@ -57,41 +55,41 @@ public class UserMenu {
     }
 
     private void getCourseList() {
-        Response<List<Course>, String> response = api.getCoursesList();
+        Response<List<Course>, String> response = cont.api.getCoursesList();
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
                 System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
             }
         } else {
-            message.printErrorMessage(response.getDescription());
+            cont.message.printErrorMessage(response.getDescription());
         }
     }
 
     private void getMyCoursesList() {
-        Response<List<Course>, String> response = api.getMyCoursesList(userData.getUserId());
+        Response<List<Course>, String> response = cont.api.getMyCoursesList(userData.getUserId());
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
                 System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
             }
         } else {
-            message.printErrorMessage(response.getDescription());
+            cont.message.printErrorMessage(response.getDescription());
         }
     }
 
     private void getMyProgressAnalytic() {
-        Response<List<Course>, String> response = api.getMyAnalytic(userData.getUserId());
+        Response<List<Course>, String> response = cont.api.getMyAnalytic(userData.getUserId());
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
                 System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
             }
         } else {
-            message.printErrorMessage(response.getDescription());
+            cont.message.printErrorMessage(response.getDescription());
         }
     }
 
     private void tryAgainMenu() {
-        decor.printDecoratedMenu("1.Try again.;0.Go back.", "");
-        int userChoice = userInput.getInt();
+        cont.decor.printDecoratedMenu("1.Try again.;0.Go back.", "");
+        int userChoice = cont.userInput.getInt();
         switch (userChoice) {
             case 1: {
                 startMenu(userData);
@@ -100,7 +98,7 @@ public class UserMenu {
                 break;
             }
             default: {
-                message.printErrorMessage("Incorrect input. Try again.");
+                cont.message.printErrorMessage("Incorrect input. Try again.");
                 tryAgainMenu();
             }
         }
