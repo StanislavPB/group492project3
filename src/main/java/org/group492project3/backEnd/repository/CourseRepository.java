@@ -27,7 +27,7 @@ public class CourseRepository {
     public Course findById(Integer id) {
 
         return databaseCourse.stream()
-                .filter(note -> note.getId().equals(id))
+                .filter(course -> course.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
@@ -35,7 +35,7 @@ public class CourseRepository {
     public List<Course> findByName(String name) {
 
         return databaseCourse.stream()
-                .filter(note -> note.getName().equals(name))
+                .filter(course -> course.getName().equals(name))
                 .toList();
     }
 
