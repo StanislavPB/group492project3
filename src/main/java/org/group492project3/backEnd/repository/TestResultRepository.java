@@ -1,9 +1,6 @@
 package org.group492project3.backEnd.repository;
 
-import com.sun.net.httpserver.Request;
-import org.group492project3.backEnd.dto.Response;
 import org.group492project3.backEnd.entity.TestResult;
-import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 
 import java.util.ArrayList;
 import java.util.List;
