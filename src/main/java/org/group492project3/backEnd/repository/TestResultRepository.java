@@ -1,22 +1,36 @@
 package org.group492project3.backEnd.repository;
 
+import com.sun.net.httpserver.Request;
+import org.group492project3.backEnd.dto.Response;
 import org.group492project3.backEnd.entity.TestResult;
+import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestResultRepository {
 
-    public List <TestResult> testingWithResults = new ArrayList<>();
+    public List <TestResult> databaseTestResults = new ArrayList<>();
     private Integer resultsGetID = 0;
 
-    private TestResult addTestingFromStudent (Integer idOfCourse, Integer studentID) {
 
-            resultsGetID = testingWithResults.size()+1;
-            TestResult testResultForSave = new TestResult (studentID, idOfCourse);
-            testingWithResults.add(testResultForSave);
-            return testResultForSave;
-        }
+    public TestResult addTestResult(Integer idCourse, Integer idStudent, Integer amountOfQuestions, Integer amountOfRightAnswers){
+        resultsGetID = databaseTestResults.size()+1;
+
+        Double percentOfCorrectAnswers = amountOfRightAnswers * 100.0 / amountOfQuestions;
+
+        TestResult testResultForSave = new TestResult(resultsGetID, idCourse, idStudent, amountOfQuestions, amountOfRightAnswers, percentOfCorrectAnswers);
+        databaseTestResults.add(testResultForSave);
+        return testResultForSave;
+    }
+
+    public List<TestResult> getTestingResultsForStudentCourse(Integer idCourse, Integer idStudent){
+
+        return databaseTestResults.stream()
+                .filter(testResult -> testResult.getIdCourse().equals(idCourse) && testResult.getIdStudent().equals(idStudent))
+                .toList();
+    }
+
 
 }
 

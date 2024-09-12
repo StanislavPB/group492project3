@@ -1,27 +1,41 @@
 package org.group492project3.backEnd.entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.time.LocalDate;
 
 public class TestResult {
 
-    private Integer testResultID;
-    private Integer idOfCourse;
-    private Integer studentID;
-    private Integer dateOfTesting;
+    private Integer id;
+    private Integer idCourse;
+    private Integer idStudent;
+    private LocalDate dateOfTesting;
     private Integer amountOfQuestions;
     private Integer amountOfRightAnswers;
+    private Double percentOfCorrectAnswers;
 
-
-    public TestResult(Integer studentID, Integer idOfCourse) {
-        this.studentID = studentID;
-        this.idOfCourse = idOfCourse;
+    public TestResult(Integer id, Integer idCourse, Integer idStudent, Integer amountOfQuestions, Integer amountOfRightAnswers, Double percentOfCorrectAnswers) {
+        this.id = id;
+        this.idCourse = idCourse;
+        this.idStudent = idStudent;
+        this.dateOfTesting = LocalDate.now();
+        this.amountOfQuestions = amountOfQuestions;
+        this.amountOfRightAnswers = amountOfRightAnswers;
+        this.percentOfCorrectAnswers = percentOfCorrectAnswers;
     }
 
+    public Integer getId() {
+        return id;
+    }
 
-    public Integer getIdOfCourse() {
-        return idOfCourse;
+    public Integer getIdCourse() {
+        return idCourse;
+    }
+
+    public Integer getIdStudent() {
+        return idStudent;
+    }
+
+    public LocalDate getDateOfTesting() {
+        return dateOfTesting;
     }
 
     public Integer getAmountOfQuestions() {
@@ -32,35 +46,7 @@ public class TestResult {
         return amountOfRightAnswers;
     }
 
-    public Integer getStudentID() {
-        return studentID;
+    public Double getPercentOfCorrectAnswers() {
+        return percentOfCorrectAnswers;
     }
-
-
-    public Integer getTestResultID() {
-        return testResultID;
-    }
-
-
-    public void setDateOfTesting(Integer dateOfTesting) {
-        this.dateOfTesting = dateOfTesting;
-    }
-
-    public Integer getDateOfTesting() {
-        return dateOfTesting;
-    }
-
-
-    public void setAmountOfQuestions(Integer amountOfQuestions) {
-        this.amountOfQuestions = amountOfQuestions;
-    }
-
-    public void setTestResultID(Integer testResultID) {
-        this.testResultID = testResultID;
-    }
-
-    public void setAmountOfRightAnswers(Integer amountOfRightAnswers) {
-        this.amountOfRightAnswers = amountOfRightAnswers;
-    }
-
 }
