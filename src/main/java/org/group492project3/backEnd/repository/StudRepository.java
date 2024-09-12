@@ -1,5 +1,6 @@
 package org.group492project3.backEnd.repository;
 
+import org.group492project3.backEnd.entity.Course;
 import org.group492project3.backEnd.entity.Student;
 
 import java.util.ArrayList;
@@ -28,12 +29,9 @@ public class StudRepository {
         return stForDelete;
     }
 
-
     public List<Student> getAllStudent() {
         return studentBase;
     }
-
-
 
     public Student findById(Integer id) {
         for (Student student : studentBase) {
@@ -44,6 +42,17 @@ public class StudRepository {
         return null;
     }
 
+    public List<Course> getCourseList(Student student){
+        return student.getCourseList();
+    }
+
+    public void addCourse(Student student, Course newCourse){
+        student.addCourse(newCourse);
+    }
+
+    public void removeCourse(Student student, Course course){
+        student.removeCourse(course);
+    }
 
 }
 

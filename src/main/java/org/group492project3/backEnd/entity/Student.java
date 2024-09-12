@@ -28,7 +28,6 @@ public class Student {
         return id;
     }
 
-
     public String getLastName() {
         return lastName;
     }
@@ -52,6 +51,16 @@ public class Student {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    //---------------------------  Course
+    public void addCourse(Course newCourse){
+        courseList.add(newCourse);
+    }
+
+    public void removeCourse(Course course){
+        courseList.remove(course);
+    }
+
 
 
     @Override
