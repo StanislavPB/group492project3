@@ -59,23 +59,22 @@ public class Student {
     }
 
     //---------------------------  Course
-    public void addCourse(Course newCourse){
+    public void addCourse(Course newCourse) {
         courseList.add(newCourse);
     }
 
-    public void removeCourse(Course course){
+    public void removeCourse(Course course) {
         courseList.remove(course);
     }
-
 
 
     @Override
     public String toString() {
         return "Student{" +
-                "firstName='" + firstName + '\'' +
-                ", id=" + id +
-                ", lastName='" + lastName + '\'' +
-                '}';
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'';
     }
 }
 
