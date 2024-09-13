@@ -9,6 +9,7 @@ public class Student {
     private String password;
     private String firstName;
     private String lastName;
+    private String role;
     private List<Course> courseList;
 
     public Student(Integer id, String login, String password, String firstName, String lastName) {
@@ -17,6 +18,7 @@ public class Student {
         this.lastName = lastName;
         this.login = login;
         this.password = password;
+        role = "user";
         courseList = new ArrayList<>();
     }
 
@@ -42,6 +44,10 @@ public class Student {
 
     public List<Course> getCourseList() {
         return courseList;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public void setLogin(String login) {

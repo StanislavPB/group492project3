@@ -25,10 +25,21 @@ public class StudentService {
     public Response<Student, String> findById(Integer id) {
         Student foundStudent = studRepository.findById(id);
         if (foundStudent == null) {
-            return new Response<>(null, false, "Student with id=" + id + "not exists");
+            return new Response<>(null, false, "Student with id= " + id + "not exists");
         } else {
             return new Response<>(foundStudent, true, "");
         }
+    }
+
+    public Response<Student, String> findByLogin(String login) {
+        Student foundStudent = studRepository.findByLogin(login);
+
+        if (foundStudent == null) {
+            return new Response<>(null, false, "Student with login = " + login + "not exists!");
+        } else {
+            return new Response<>(foundStudent, true, "");
+        }
+
     }
 
 

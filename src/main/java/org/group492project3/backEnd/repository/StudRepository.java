@@ -40,6 +40,13 @@ public class StudRepository {
         return null;
     }
 
+    public Student findByLogin(String login) {
+        return studentBase.stream()
+                .filter(course -> course.getLogin().equals(login))
+                .findFirst()
+                .orElse(null);
+    }
+
     public List<Course> getCourseList(Student student){
         return student.getCourseList();
     }
