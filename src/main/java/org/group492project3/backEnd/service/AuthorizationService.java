@@ -19,7 +19,7 @@ public class AuthorizationService {
             Response<Student, String> foundUser = cont.studentService.findByLogin(login);
             if (foundUser.getStatusOfOperation()) {
                 Student user = foundUser.getElementOfOperation();
-                new Response<LoginUserResponse, String>(new LoginUserResponse(user.getId(), user.getRole(), user.getFirstName(), user.getLastName()), true, "");
+                return new Response<LoginUserResponse, String>(new LoginUserResponse(user.getId(), user.getRole(), user.getFirstName(), user.getLastName()), true, "");
             }
         }
         return new Response<LoginUserResponse, String>(null, false, "Incorrect login or password.");
