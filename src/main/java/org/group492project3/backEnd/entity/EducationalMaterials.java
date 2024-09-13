@@ -40,11 +40,10 @@ public class EducationalMaterials {
 
     @Override
     public String toString() {
-        return "EducationalMaterials{" +
-                "idOfCourse=" + idOfCourse +
-                ", idOfMaterial=" + idOfMaterial +
-                ", materialType='" + materialType + '\'' +
-                ", materialDescription='" + materialDescription + '\'' +
-                '}';
+        return "Учебный материал: " +
+                "id курса" + idOfCourse +
+                ", id материала " + idOfMaterial + "\n" +
+                ", тип материала '" + materialType + "\n"  +
+                ", задание для самостоятельной работы: " + "\n" + materialDescription + '.';
     }
 }
