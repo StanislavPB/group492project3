@@ -4,6 +4,7 @@ import org.group492project3.backEnd.entity.EducationalMaterials;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class EdMatRepository {
 
@@ -23,13 +24,22 @@ public class EdMatRepository {
                 .toList();
     }
 
-    public EducationalMaterials findByMaterialsId(Integer idOfMaterial) {
+    public String findByWordInDescription () {
 
-        return materials.stream()
-                .filter(note -> note.getIdOfMaterial().equals(idOfMaterial))
-                .findFirst()
-                .orElse(null);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите слово для поиска в описании учебного материала.");
+        String stringFromUser = scanner.nextLine();
+
+        String forsearching = new String(materials.getFirst().getMaterialDescription().toLowerCase());
+
+        if (forsearching.contains(stringFromUser)) {
+            System.out.println("В этом описании есть слово: " + stringFromUser + "." );
+        } else {
+            System.out.println("Слова - " + stringFromUser + " - в описании нет.");}
+
+        return stringFromUser;
     }
+
 
     public EducationalMaterials updateDescription(EducationalMaterials materialForUpdate) {
         materialForUpdate.setMaterialDescription(materialForUpdate.getMaterialDescription());
