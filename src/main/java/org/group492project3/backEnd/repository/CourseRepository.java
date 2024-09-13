@@ -11,11 +11,9 @@ import java.util.List;
 public class CourseRepository {
 
     private List<Course> databaseCourse = new ArrayList<>();
-    private Integer idCourse = 0;
 
     public Course addCourse(String nameCourse) {
-        idCourse = databaseCourse.size()+1;
-        Course courseForSave = new Course(idCourse,nameCourse);
+        Course courseForSave = new Course((databaseCourse.size()+1),nameCourse);
         databaseCourse.add(courseForSave);
         return courseForSave;
     }

@@ -9,11 +9,9 @@ import java.util.List;
 public class StudRepository {
 
     private List<Student> studentBase = new ArrayList<>();
-    private Integer id;
 
-    public Student add(Integer id, String login, String password, String firstName, String lastName) {
-        id = studentBase.size() + 1;
-        Student newStudent = new Student(id, login, password, firstName, lastName);
+    public Student add(String login, String password, String firstName, String lastName) {
+        Student newStudent = new Student( (studentBase.size() + 1), login, password, firstName, lastName);
         studentBase.add(newStudent);
         return newStudent;
     }
