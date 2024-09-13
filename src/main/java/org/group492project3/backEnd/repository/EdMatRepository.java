@@ -35,7 +35,7 @@ public class EdMatRepository {
         if (forsearching.contains(stringFromUser)) {
             System.out.println("В этом описании есть слово: " + stringFromUser + "." );
         } else {
-            System.out.println("Слова - " + stringFromUser + " - в описании нет.");}
+            System.out.println("Слова " + stringFromUser + " - в описании нет.");}
 
         return stringFromUser;
     }

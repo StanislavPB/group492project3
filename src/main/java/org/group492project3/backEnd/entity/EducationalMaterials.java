@@ -43,7 +43,8 @@ public class EducationalMaterials {
         return "Учебный материал: " +
                 "id курса" + idOfCourse +
                 ", id материала " + idOfMaterial + "\n" +
-                ", тип материала '" + materialType + "\n"  +
-                ", задание для самостоятельной работы: " + "\n" + materialDescription + '.';
+                ", тип материала " + materialType + "\n"
+                + ", задание для самостоятельной работы: " + "\n"
+                + materialDescription + '.';
     }
 }
