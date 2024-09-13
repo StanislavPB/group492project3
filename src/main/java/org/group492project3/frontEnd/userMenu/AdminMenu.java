@@ -13,10 +13,12 @@ import org.group492project3.frontEnd.services.UserInputService;
 import java.util.List;
 
 public class AdminMenu {
+    Api api;
     Container cont;
 
     public AdminMenu(Container cont) {
         this.cont = cont;
+        this.api = new Api(cont);
     }
 
     public void startMenu() {
@@ -62,7 +64,7 @@ public class AdminMenu {
     }
 
     public void NewCourseMenu() {
-        Response<Course, String> response = cont.api.addNewCourse(new AddCourseRequest(cont.userInput.getString("Enter name of new course:")));
+        Response<Course, String> response = api.addNewCourse(new AddCourseRequest(cont.userInput.getString("Enter name of new course:")));
         if (response.getStatusOfOperation()) {
             cont.message.printSuccessMessage("New course was successfully created.");
         } else {
@@ -92,7 +94,7 @@ public class AdminMenu {
     }
 
     public void getCoursesList() {
-        Response<List<Course>, String> response = cont.api.getCoursesList();
+        Response<List<Course>, String> response = api.getCoursesList();
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
                 System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));

@@ -1,5 +1,6 @@
 package org.group492project3.frontEnd.userMenu;
 
+import org.group492project3.backEnd.API.Api;
 import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.RegistrationResponce;
@@ -7,16 +8,18 @@ import org.group492project3.backEnd.dto.Response;
 
 public class Registration {
     Container cont;
+    Api api;
     private final UserMenu userMenu;
 
     public Registration(Container cont) {
-        userMenu = new UserMenu(cont);
+        this.userMenu = new UserMenu(cont);
+        this.api = new Api(cont);
         this.cont = cont;
     }
 
     public void startMenu() {
         cont.decor.printDecorativeLineWithWord("REGISTRATION MENU");
-        Response<RegistrationResponce, String> registrationResult = cont.api.registration(cont.userInput.getString("Enter login:"), cont.userInput.getString("Enter password:"), cont.userInput.getString("Enter first name:"), cont.userInput.getString("Enter second name:"));
+        Response<RegistrationResponce, String> registrationResult = api.registration(cont.userInput.getString("Enter login:"), cont.userInput.getString("Enter password:"), cont.userInput.getString("Enter first name:"), cont.userInput.getString("Enter second name:"));
         cont.decor.printDecorativeLine();
         if (registrationResult.getStatusOfOperation()) {
             userMenu.start(getCurrentUserInfoForAutoLogin(registrationResult.getElementOfOperation()));
