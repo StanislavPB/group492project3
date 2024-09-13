@@ -10,8 +10,12 @@ public class StudRepository {
 
     private List<Student> studentBase = new ArrayList<>();
 
+    public StudRepository() {//! DELETE AFTER TESTING
+        studentBase.add(new Student(1, "lalala@mail.com ", " pass11 ", " Mamkin ", " Animeshnik "));
+    }
+
     public Student add(String login, String password, String firstName, String lastName) {
-        Student newStudent = new Student( (studentBase.size() + 1), login, password, firstName, lastName);
+        Student newStudent = new Student((studentBase.size() + 1), login, password, firstName, lastName);
         studentBase.add(newStudent);
         return newStudent;
     }
@@ -40,15 +44,15 @@ public class StudRepository {
         return null;
     }
 
-    public List<Course> getCourseList(Student student){
+    public List<Course> getCourseList(Student student) {
         return student.getCourseList();
     }
 
-    public void addCourse(Student student, Course newCourse){
+    public void addCourse(Student student, Course newCourse) {
         student.addCourse(newCourse);
     }
 
-    public void removeCourse(Student student, Course course){
+    public void removeCourse(Student student, Course course) {
         student.removeCourse(course);
     }
 

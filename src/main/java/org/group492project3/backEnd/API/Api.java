@@ -3,22 +3,30 @@ package org.group492project3.backEnd.API;
 import org.group492project3.backEnd.dto.*;
 import org.group492project3.backEnd.entity.Course;
 import org.group492project3.backEnd.entity.Student;
+import org.group492project3.backEnd.service.AuthorizationService;
 
 import java.util.List;
 
 public class Api {
     Container cont;
+    AuthorizationService authService;
 
     public Api(Container cont) {
         this.cont = cont;
+        this.authService = new AuthorizationService(cont);
     }
 
     public Response<LoginUserResponse, String> authorisation(String login, String password) {
-        //new User(login, password);
-        //!forTesting finish it
-        if (login.equals("user") && password.equals("pass"))
-            return new Response<>(new LoginUserResponse(1, "user", "Alex", "Firko"), true, ""); //plug
-        return new Response<>(null, false, "Pass or login isn't correct."); //plug
+        Response<LoginUserResponse, String> loginResult = authService.authorization(login, password);
+        if (loginResult.getStatusOfOperation()) {
+            LoginUserResponse user = loginResult.getElementOfOperation();
+            if (user.getRole().equals("user")) {
+                return new Response<>(user, true, "");
+            } else {
+                return new Response<>(user, true, "Pass or login isn't correct.");
+            }
+        }
+        return new Response<>(null, false, loginResult.getDescription());
     }
 
     public Response<RegistrationResponce, String> registration(String login, String password, String firstName, String secondName) {
