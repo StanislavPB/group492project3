@@ -33,12 +33,12 @@ public class StudentService {
 
 
 
-    public Response<Student, String> addStudent(Integer id,String firstName, String lastName, String login, String passwort) {
-        String valResult = validation.validate(firstName, lastName, login, passwort);
+    public Response<Student, String> addStudent(String firstName, String lastName, String login, String password) {
+        String valResult = validation.validate(firstName, lastName, login, password);
         if (!valResult.isEmpty()) {
             return new Response<>(null, false, valResult);
         }
-        Student savedStudent = studRepository.add(id,login,passwort,firstName,lastName );
+        Student savedStudent = studRepository.add(login,password,firstName,lastName );
         return new Response<>(savedStudent,true,"");
     }
 
