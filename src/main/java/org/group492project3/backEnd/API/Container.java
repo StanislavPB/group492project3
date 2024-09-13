@@ -11,11 +11,13 @@ import org.group492project3.backEnd.service.validation.StudentValidation;
 import org.group492project3.frontEnd.services.DecorationService;
 import org.group492project3.frontEnd.services.MessageService;
 import org.group492project3.frontEnd.services.UserInputService;
+import org.group492project3.frontEnd.services.validation.Validation;
 
 public class Container {
     public StudentService studentService = new StudentService(new StudRepository(), new StudentValidation());
     public CourseService courseService = new CourseService(new CourseRepository(),new CourseValidation());
     public EducationalMaterialsService educationalMaterialsService = new EducationalMaterialsService(new EdMatRepository());
+    public Validation validation = new Validation();
     public DecorationService decor = new DecorationService();
     public MessageService message = new MessageService();
     public UserInputService userInput = new UserInputService();
