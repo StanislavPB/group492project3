@@ -1,11 +1,13 @@
 package org.group492project3.frontEnd.userMenu;
 
+import org.group492project3.backEnd.API.Api;
 import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.LoginUserResponse;
 import org.group492project3.backEnd.dto.Response;
 
 public class LoginMenu {
+    Api api;
     Container cont;
     private final AdminMenu adminMenu;
     private final UserMenu userMenu;
@@ -14,11 +16,12 @@ public class LoginMenu {
         adminMenu = new AdminMenu(cont);
         userMenu = new UserMenu(cont);
         this.cont = cont;
+        this.api = new Api(cont);
     }
 
     public void startMenu() {
         cont.decor.printDecorativeLineWithWord("LOGIN MENU");
-        Response<LoginUserResponse, String> loginResult = cont.api.authorisation(cont.userInput.getString("Enter login:"), cont.userInput.getString("Enter password:"));
+        Response<LoginUserResponse, String> loginResult = api.authorisation(cont.userInput.getString("Enter login:"), cont.userInput.getString("Enter password:"));
         cont.decor.printDecorativeLine();
         if (loginResult.getStatusOfOperation()) {
             if (loginResult.getElementOfOperation().getRole().equals("admin")) {

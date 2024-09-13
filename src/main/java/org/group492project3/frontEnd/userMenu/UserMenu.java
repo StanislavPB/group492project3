@@ -1,5 +1,6 @@
 package org.group492project3.frontEnd.userMenu;
 
+import org.group492project3.backEnd.API.Api;
 import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.Response;
@@ -9,9 +10,11 @@ import java.util.List;
 
 public class UserMenu {
     Container cont;
+    Api api;
     private CurrentUser userData = null;
 
     public UserMenu(Container cont) {
+        this.api = new Api(cont);
         this.cont = cont;
     }
 
@@ -55,7 +58,7 @@ public class UserMenu {
     }
 
     private void getCourseList() {
-        Response<List<Course>, String> response = cont.api.getCoursesList();
+        Response<List<Course>, String> response = api.getCoursesList();
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
                 System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
@@ -66,7 +69,7 @@ public class UserMenu {
     }
 
     private void getMyCoursesList() {
-        Response<List<Course>, String> response = cont.api.getMyCoursesList(userData.getUserId());
+        Response<List<Course>, String> response = api.getMyCoursesList(userData.getUserId());
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
                 System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
@@ -77,7 +80,7 @@ public class UserMenu {
     }
 
     private void getMyProgressAnalytic() {
-        Response<List<Course>, String> response = cont.api.getMyAnalytic(userData.getUserId());
+        Response<List<Course>, String> response = api.getMyAnalytic(userData.getUserId());
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
                 System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
@@ -104,7 +107,7 @@ public class UserMenu {
         }
     }
 
-    private void exit(){
+    private void exit() {
 
     }
 
