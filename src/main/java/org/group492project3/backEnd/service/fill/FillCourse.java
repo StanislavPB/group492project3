@@ -18,14 +18,11 @@ public class FillCourse {
         this.cont = cont;
     }
 
-    public void fillCourseJava(){
-
-        Response<Course,String> courseJavaResponse = cont.courseService.addNewCourse("Java");
-
-        if(courseJavaResponse.getStatusOfOperation()){
+    public void fillCourseJava() {
+        Response<Course, String> courseJavaResponse = cont.courseService.addNewCourse("Java");
+        if (courseJavaResponse.getStatusOfOperation()) {
 
             Course courseJava = courseJavaResponse.getElementOfOperation();
-
             Integer idCourse = courseJava.getId();
 
             //---------------------------------------  заполнить тесты
@@ -33,11 +30,11 @@ public class FillCourse {
             TestQuestionsRepository testQuestionsRepository = new TestQuestionsRepository();
             String question1 = "Укажите какой тип данных, из представленных, занимает наибольшее место памяти.";
             Map<Integer, String> answersMap1 = new HashMap<>();
-            answersMap1.put(1,"int");
-            answersMap1.put(2,"byte");
-            answersMap1.put(3,"double");
-            answersMap1.put(4,"float");
-            answersMap1.put(5,"никакой, так как все примитивные типы занимают одинаковый объём в памяти");
+            answersMap1.put(1, "int");
+            answersMap1.put(2, "byte");
+            answersMap1.put(3, "double");
+            answersMap1.put(4, "float");
+            answersMap1.put(5, "никакой, так как все примитивные типы занимают одинаковый объём в памяти");
 
             TestQuestions testQuestions1 = testQuestionsRepository.addTestQuestions(idCourse, question1, answersMap1, 3);
             courseJava.addTestQuestionsToList(testQuestions1);
@@ -45,10 +42,10 @@ public class FillCourse {
 
             String question2 = "Какое расширение имеют файлы с исходным кодом Java?";
             Map<Integer, String> answersMap2 = new HashMap<>();
-            answersMap2.put(1,".javac");
-            answersMap2.put(2,".java");
-            answersMap2.put(3,".class");
-            answersMap2.put(4,".classpath");
+            answersMap2.put(1, ".javac");
+            answersMap2.put(2, ".java");
+            answersMap2.put(3, ".class");
+            answersMap2.put(4, ".classpath");
 
             TestQuestions testQuestions2 = testQuestionsRepository.addTestQuestions(idCourse, question2, answersMap2, 2);
             courseJava.addTestQuestionsToList(testQuestions2);
@@ -56,30 +53,30 @@ public class FillCourse {
 
             String question3 = "Импорт какого пакета в Java происходит автоматически?";
             Map<Integer, String> answersMap3 = new HashMap<>();
-            answersMap3.put(1,"Все пакеты нужно явно указывать");
-            answersMap3.put(2,"java.util");
-            answersMap3.put(3,"java.lang");
-            answersMap3.put(4,"java.text");
+            answersMap3.put(1, "Все пакеты нужно явно указывать");
+            answersMap3.put(2, "java.util");
+            answersMap3.put(3, "java.lang");
+            answersMap3.put(4, "java.text");
 
             TestQuestions testQuestions3 = testQuestionsRepository.addTestQuestions(idCourse, question3, answersMap3, 3);
             courseJava.addTestQuestionsToList(testQuestions3);
 
             String question4 = "Какой арифметический оператор в Java не существует?";
             Map<Integer, String> answersMap4 = new HashMap<>();
-            answersMap4.put(1,"--");
-            answersMap4.put(2,"%");
-            answersMap4.put(3,"**");
-            answersMap4.put(4,"++");
+            answersMap4.put(1, "--");
+            answersMap4.put(2, "%");
+            answersMap4.put(3, "**");
+            answersMap4.put(4, "++");
 
             TestQuestions testQuestions4 = testQuestionsRepository.addTestQuestions(idCourse, question4, answersMap4, 3);
             courseJava.addTestQuestionsToList(testQuestions4);
 
             String question5 = "Какой тип преобразования не произойдёт автоматически?";
             Map<Integer, String> answersMap5 = new HashMap<>();
-            answersMap5.put(1,"byte в short");
-            answersMap5.put(2,"int в long");
-            answersMap5.put(3,"char в short");
-            answersMap5.put(4,"long в float");
+            answersMap5.put(1, "byte в short");
+            answersMap5.put(2, "int в long");
+            answersMap5.put(3, "char в short");
+            answersMap5.put(4, "long в float");
 
             TestQuestions testQuestions5 = testQuestionsRepository.addTestQuestions(idCourse, question5, answersMap5, 3);
             courseJava.addTestQuestionsToList(testQuestions5);
@@ -89,23 +86,23 @@ public class FillCourse {
             ////заполнить материалы
 
             String description = "Java – популярный многофункциональный язык программирования, используемый для создания бизнес логики веб-проектов, а также приложений для Android.";
-            Response<EducationalMaterials,String> educationalMaterialsResponse = cont.educationalMaterialsService.addMaterial(idCourse, "Java For Dummies", description);
-            if(educationalMaterialsResponse.getStatusOfOperation()){
+            Response<EducationalMaterials, String> educationalMaterialsResponse = cont.educationalMaterialsService.addMaterial(idCourse, "Java For Dummies", description);
+            if (educationalMaterialsResponse.getStatusOfOperation()) {
                 courseJava.addEducationalMaterialsToList(educationalMaterialsResponse.getElementOfOperation());
             }
 
             // добавить студентов
 
-            Response<Student,String> studentResponse1 = cont.studentService.addStudent("Ivan", "Ivanov", "login1", "pass1");
-            if(studentResponse1.getStatusOfOperation()){
+            Response<Student, String> studentResponse1 = cont.studentService.addStudent("Ivan", "Ivanov", "login1", "pass111");
+            if (studentResponse1.getStatusOfOperation()) {
                 courseJava.addStudentToList(studentResponse1.getElementOfOperation());
             }
-            Response<Student,String> studentResponse2 = cont.studentService.addStudent("Petr", "Petrov", "login2", "pass2");
-            if(studentResponse2.getStatusOfOperation()){
+            Response<Student, String> studentResponse2 = cont.studentService.addStudent("Petr", "Petrov", "login2", "pass222");
+            if (studentResponse2.getStatusOfOperation()) {
                 courseJava.addStudentToList(studentResponse2.getElementOfOperation());
             }
-            Response<Student,String> studentResponse3 = cont.studentService.addStudent("Sidr", "Sidorov", "login3", "pass3");
-            if(studentResponse3.getStatusOfOperation()){
+            Response<Student, String> studentResponse3 = cont.studentService.addStudent("Sidr", "Sidorov", "login3", "pass333");
+            if (studentResponse3.getStatusOfOperation()) {
                 courseJava.addStudentToList(studentResponse3.getElementOfOperation());
             }
 

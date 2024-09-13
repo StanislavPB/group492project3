@@ -4,15 +4,18 @@ import org.group492project3.backEnd.dto.*;
 import org.group492project3.backEnd.entity.Course;
 import org.group492project3.backEnd.entity.Student;
 import org.group492project3.backEnd.service.AuthorizationService;
+import org.group492project3.backEnd.service.fill.FillCourse;
 
 import java.util.List;
 
 public class Api {
     Container cont;
     AuthorizationService authService;
+    FillCourse fillCourse;
 
     public Api(Container cont) {
         this.cont = cont;
+        fillCourse = new FillCourse(cont);
         this.authService = new AuthorizationService(cont);
     }
 
@@ -35,8 +38,11 @@ public class Api {
     }
 
     public Response<List<Course>, String> getCoursesList() {
-        // new NewUser(login, password, firstName, secondName);
-        return new Response<>(null, false, null); //plug
+        Response<List<Course>, String> courseList = cont.courseService.findAllCourses();
+        if (courseList.getStatusOfOperation() && courseList.getElementOfOperation() != null) {
+            return new Response<>(courseList.getElementOfOperation(), true, null); //plug
+        }
+        return new Response<>(null, false, "Course repository is empty.");
     }
 
     public Response<List<Course>, String> getMyCoursesList(int studentId) {
@@ -56,6 +62,9 @@ public class Api {
 
     public Response<Student, String> getStudentByLogin(String login) {
         return null;//!!!!!
+    }
+    public void fillDataBaseForTesting(){
+        fillCourse.fillCourseJava();
     }
 
 
