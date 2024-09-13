@@ -102,12 +102,13 @@ public class AdminMenu {
         } else {
             cont.message.printErrorMessage(response.getDescription());
         }
+
     }
 
     public void addDataForTesting() {
-
-        FillCourse fillCourse = new FillCourse(cont);
-        fillCourse.fillCourseJava();
+        api.fillDataBaseForTesting();
+        cont.message.printSuccessMessage("Data has been added to the repository successfully.");
+        start();
     }
 
     public void exit() {

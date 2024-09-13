@@ -10,11 +10,6 @@ public class StudRepository {
 
     private List<Student> studentBase = new ArrayList<>();
 
-    public StudRepository() {//! DELETE AFTER TESTIN
-        studentBase.add(new Student(1, "lalala@mail.com", "pass11", " Mamkin ", " Animeshnik "));
-        System.out.println(studentBase);
-    }
-
     public Student add(String login, String password, String firstName, String lastName) {
         Student newStudent = new Student((studentBase.size() + 1), login, password, firstName, lastName);
         studentBase.add(newStudent);
