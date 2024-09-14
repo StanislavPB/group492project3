@@ -2,7 +2,9 @@ package org.group492project3.backEnd.API;
 
 import org.group492project3.backEnd.dto.*;
 import org.group492project3.backEnd.entity.Course;
+import org.group492project3.backEnd.entity.EducationalMaterials;
 import org.group492project3.backEnd.entity.Student;
+import org.group492project3.backEnd.entity.TestQuestions;
 import org.group492project3.backEnd.service.AuthorizationService;
 import org.group492project3.backEnd.service.fill.FillCourse;
 
@@ -19,7 +21,7 @@ public class Api {
         this.authService = new AuthorizationService(cont);
     }
 
-    public Response<LoginUserResponse, String> authorisation(String login, String password) {
+    public Response<LoginUserResponse, String> authorisation(String login, String password) {   //! need rewrite this method
         Response<LoginUserResponse, String> loginResult = authService.authorization(login, password);
         if (loginResult.getStatusOfOperation()) {
             LoginUserResponse user = loginResult.getElementOfOperation();
@@ -37,7 +39,7 @@ public class Api {
         return new Response<>(null, false, null); //plug
     }
 
-    public Response<List<Course>, String> getCoursesList() {
+    public Response<List<Course>, String> getCoursesList() {  //! need rewrite this method
         Response<List<Course>, String> courseList = cont.courseService.findAllCourses();
         if (courseList.getStatusOfOperation() && courseList.getElementOfOperation() != null) {
             return new Response<>(courseList.getElementOfOperation(), true, null); //plug
@@ -55,40 +57,36 @@ public class Api {
         return new Response<>(null, false, null); //plug
     }
 
-    public Response<Course, String> addNewCourse(AddCourseRequest newCourse) {     //!  change "Course" on "Analytic"
-        // new NewUser(login, password, firstName, secondName);
-        return new Response<>(null, false, null); //plug
+    public Response<Course, String> addNewCourse(String newCourseName) {     //!  change "Course" on "Analytic"
+        return cont.courseService.addNewCourse(newCourseName);
     }
 
-    public Response<Student, String> getStudentByLogin(String login) {
-        return null;//!!!!!
+    public Response<List<Course>, String> getCourseByName(String nameOfCourse) {
+        return cont.courseService.findByName(nameOfCourse);
     }
-    public void fillDataBaseForTesting(){
+
+    public void deleteStudentFromCourse(Course course, Student student) {
+        cont.courseService.removeStudentFromCourse(course, student);
+    }
+
+    public Response<List<EducationalMaterials>, String> getCourseMaterials(int id) {
+        return cont.courseService.getEducationalMaterialsToCourse(id);
+    }
+
+    public Response<List<TestQuestions>, String> getTestQuestionsList(int id) {
+        return cont.courseService.getTestQuestionsToCourse(id);
+    }
+
+
+    public void fillDataBaseForTesting() {
         fillCourse.fillCourseJava();
     }
 
-
-    /*
-    public Response<newCourse, String> createNewCourse(String nameOfCourse) {
-        // new NewCourse(nameOfCourse);
-        return new Response<>(null, false, null); //plug
+    public Response<String, String> editNameOfCourse(int id, String name) {
+        return cont.courseService.renameCourse(id, name);
     }
 
-    public Response<Course, ArrayList<String>> updateCourse(Course updatedCourse) {
-        // new NewCourse(nameOfCourse);
-        return new Response<>(null, false, null); //plug
+    public Response<Course, String> deleteCourse(Integer id) {
+        return cont.courseService.deleteCourse(id);
     }
-
-    public Response<String, String> editNameOfCourse() {
-        // new NewCourse(nameOfCourse);
-        return new Response<>(null, false, null); //plug
-    }
-
-    public Response<Course, String> findCourseByName(String nameOfCourse) {
-        // new NewCourse(nameOfCourse);
-        return new Response<>(null, false, null); //plug
-    }
-
-
-    */
 }

@@ -19,4 +19,8 @@ public class UserInputService {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
+    public String getString() {
+        Scanner in = new Scanner(System.in);
+        return in.nextLine();
+    }
 }
