@@ -4,7 +4,7 @@ import static java.lang.Character.isDigit;
 
 public class Validation {
 
-    public static boolean isNumbers(String str) {
+    public boolean isNumbers(String str) {
         if(str.isEmpty())return false;
 
         for (int i = 0; i < str.length(); i++) {

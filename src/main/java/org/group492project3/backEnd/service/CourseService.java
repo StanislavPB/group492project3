@@ -8,6 +8,7 @@ import org.group492project3.backEnd.entity.TestQuestions;
 import org.group492project3.backEnd.repository.CourseRepository;
 import org.group492project3.backEnd.service.validation.CourseValidation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseService {
@@ -99,6 +100,36 @@ public class CourseService {
             return new Response<>(null, true, "");
         }
         return new Response<>(foundCourse.getElementOfOperation().getName(), false, "Course with id=" + id + " didn't find.");
+    }
+
+    public Response<List<Course>, String> getCoursesStudentIsNotEnrolled(Student student){
+        List<Course> allCourses = repository.findAllCourses();
+
+        if(!allCourses.isEmpty()){
+            List<Course> coursesForStudent = new ArrayList<>();
+            for (int i = 0; i < allCourses.size(); i++) {
+                Course tempCourse = allCourses.get(i);
+                boolean isCourse = false;
+                List<Student> studentsList = tempCourse.getStudentList();
+                if(!studentsList.isEmpty()){
+                    for (int j = 0; j < studentsList.size(); j++) {
+                        if(studentsList.get(j).equals(student)){
+                            isCourse = true;
+                        }
+                    }
+                    if(!isCourse){
+                        coursesForStudent.add(tempCourse);
+                    }
+                }
+            }
+            return new Response<>(coursesForStudent, false, "");
+        }else{
+            return new Response<>(null, false, "There are no courses at DB that you can enroll in.");
+        }
+
+
+
+
     }
 
     //---------------------------------------   EducationalMaterials ------------------------------------

@@ -20,6 +20,7 @@ public class AuthMenu {
     private void startMenu() {
         cont.decor.printDecoratedMenu("1.Login.;2.Registration.", "AUTHORIZATION MENU");
         int userChoice = cont.userInput.getInt();
+
         switch (userChoice) {
             case 1: {
                 login.startMenu();

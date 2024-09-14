@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StudRepository {
 
-    private List<Student> studentBase = new ArrayList<>();
+    private final List<Student> studentBase = new ArrayList<>();
 
     public Student add(String login, String password, String firstName, String lastName) {
         Student newStudent = new Student((studentBase.size() + 1), login, password, firstName, lastName);
@@ -48,7 +48,7 @@ public class StudRepository {
                 .orElse(null);
     }
 
-    public List<Course> getCourseList(Student student){
+    public List<Course> getCourseList(Student student) {
         return student.getCourseList();
     }
 
