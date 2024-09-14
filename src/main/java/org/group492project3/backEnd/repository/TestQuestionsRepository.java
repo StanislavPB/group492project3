@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 public class TestQuestionsRepository {
-    private List<TestQuestions> databaseTestQuestions = new ArrayList<>();
+    private final List<TestQuestions> databaseTestQuestions = new ArrayList<>();
     private Integer idTestQuestions = 0;
 
     public TestQuestions addTestQuestions(Integer idCourse, String question, Map<Integer, String> answersMap, Integer correctAnswer) {
-        idTestQuestions = databaseTestQuestions.size()+1;
+        idTestQuestions = databaseTestQuestions.size() + 1;
 
         TestQuestions testQuestionsForSave = new TestQuestions(idTestQuestions, idCourse, question, answersMap, correctAnswer);
 
@@ -20,7 +20,7 @@ public class TestQuestionsRepository {
         return testQuestionsForSave;
     }
 
-    public List<TestQuestions> getTestQuestionsFromCourse(Integer idCourse){
+    public List<TestQuestions> getTestQuestionsFromCourse(Integer idCourse) {
 
         return databaseTestQuestions.stream()
                 .filter(testQ -> testQ.getIdCourse().equals(idCourse))
@@ -28,7 +28,7 @@ public class TestQuestionsRepository {
 
     }
 
-    public List<TestQuestions> getAllTestQuestions(){
+    public List<TestQuestions> getAllTestQuestions() {
         return databaseTestQuestions;
     }
 

@@ -13,7 +13,7 @@ public class CourseValidation {
             validationResult = validationResult + "Длина названия не может быть менее 3-х символов \n";
         }
 
-        if (name.length() > 15){
+        if (name.length() > 35){
             validationResult = validationResult + "Длина названия не может быть более 15-х символов \n";
         }
 

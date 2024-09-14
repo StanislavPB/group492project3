@@ -10,10 +10,10 @@ import java.util.List;
 
 public class CourseRepository {
 
-    private List<Course> databaseCourse = new ArrayList<>();
+    private final List<Course> databaseCourse = new ArrayList<>();
 
     public Course addCourse(String nameCourse) {
-        Course courseForSave = new Course((databaseCourse.size()+1),nameCourse);
+        Course courseForSave = new Course((databaseCourse.size() + 1), nameCourse);
         databaseCourse.add(courseForSave);
         return courseForSave;
     }
@@ -47,19 +47,23 @@ public class CourseRepository {
         courseForUpdate.setName(courseForUpdate.getName());
         return courseForUpdate;
     }
+
     //---------------------------------------   EducationalMaterials ------------------------------------
     //добавление EducationalMaterials к курсу
-    public void addEducationalMaterialsToCourse(Course course, EducationalMaterials educationalMaterials){
+    public void addEducationalMaterialsToCourse(Course course, EducationalMaterials educationalMaterials) {
         course.addEducationalMaterialsToList(educationalMaterials);
     }
+
     //удаление EducationalMaterials из курса
-    public void removeEducationalMaterialsFromCourse(Course course, EducationalMaterials educationalMaterials){
+    public void removeEducationalMaterialsFromCourse(Course course, EducationalMaterials educationalMaterials) {
         course.removeEducationalMaterialsFromList(educationalMaterials);
     }
+
     //полное обновление всех EducationalMaterials LIST в курсе
-    public void setEducationalMaterialsToCourse(Course course, List <EducationalMaterials> educationalMaterialsList){
+    public void setEducationalMaterialsToCourse(Course course, List<EducationalMaterials> educationalMaterialsList) {
         course.setNewEducationalMaterialsList(educationalMaterialsList);
     }
+
     //полное удаление EducationalMaterials LIST в курсе
     public void deleteEducationalMaterialsList(Course course) {
         course.deleteEducationalMaterialsList();
@@ -67,17 +71,20 @@ public class CourseRepository {
 
     //---------------------------------------   Student ------------------------------------
     //добавление студента к курсу
-    public void addNewStudentToCourse(Course course, Student student){
+    public void addNewStudentToCourse(Course course, Student student) {
         course.addStudentToList(student);
     }
+
     //удаление студента из курса
-    public void removeStudentFromCourse(Course course, Student student){
+    public void removeStudentFromCourse(Course course, Student student) {
         course.removeStudentFromList(student);
     }
+
     //полное обновление всех Student LIST в курсе
-    public void setNewStudentList(Course course, List <Student> studentList){
+    public void setNewStudentList(Course course, List<Student> studentList) {
         course.setNewStudentList(studentList);
     }
+
     //полное удаление Student LIST в курсе
     public void deleteStudentList(Course course) {
         course.deleteStudentList();
@@ -85,17 +92,20 @@ public class CourseRepository {
 
     //---------------------------------------   TestQuestions ------------------------------------
     //добавление TestQuestions к курсу
-    public void addTestQuestionsToCourse(Course course, TestQuestions testQuestions){
+    public void addTestQuestionsToCourse(Course course, TestQuestions testQuestions) {
         course.addTestQuestionsToList(testQuestions);
     }
+
     //удаление TestQuestions из курса
-    public void removeTestQuestionsFromCourse(Course course, TestQuestions testQuestions){
+    public void removeTestQuestionsFromCourse(Course course, TestQuestions testQuestions) {
         course.removeTestQuestionsFromList(testQuestions);
     }
+
     //полное обновление всех TestQuestions LIST в курсе
-    public void setNewTestQuestionsList(Course course, List <TestQuestions> testQuestionsList){
+    public void setNewTestQuestionsList(Course course, List<TestQuestions> testQuestionsList) {
         course.setNewTestQuestionsList(testQuestionsList);
     }
+
     //полное удаление TestQuestions LIST в курсе
     public void deleteTestQuestionsList(Course course) {
         course.deleteTestQuestionsList();

@@ -1,18 +1,17 @@
 package org.group492project3.backEnd.repository;
+
 import org.group492project3.backEnd.entity.EducationalMaterials;
-//import org.group492project3.frontEnd.services.UserInputService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class EdMatRepository {
-    //UserInputService userInput = UserInputService();
-    private List<EducationalMaterials> materials = new ArrayList<>();
+
+    private final List<EducationalMaterials> materials = new ArrayList<>();
 
     public EducationalMaterials addMaterial(Integer idOfCourse, String materialType, String materialDescription) {
 
-        EducationalMaterials materialsForSave = new EducationalMaterials((materials.size()+1), idOfCourse, materialType, materialDescription);
+        EducationalMaterials materialsForSave = new EducationalMaterials((materials.size() + 1), idOfCourse, materialType, materialDescription);
         materials.add(materialsForSave);
         return materialsForSave;
     }
@@ -23,9 +22,8 @@ public class EdMatRepository {
                 .filter(edMat -> edMat.getIdOfCourse().equals(idCourse))
                 .toList();
     }
-    /*
+/*
     public String findByWordInDescription () {
-
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите слово для поиска в описании учебного материала.");
@@ -41,6 +39,7 @@ public class EdMatRepository {
         return stringFromUser;
     }
 */
+
     public EducationalMaterials updateDescription(EducationalMaterials materialForUpdate) {
         materialForUpdate.setMaterialDescription(materialForUpdate.getMaterialDescription());
         return materialForUpdate;
@@ -53,7 +52,8 @@ public class EdMatRepository {
                 materials.remove(materialForDelete);
                 //System.out.println("Материал успешно удалён.");
             }
-        } return null;
+        }
+        return null;
 
     }
 }
