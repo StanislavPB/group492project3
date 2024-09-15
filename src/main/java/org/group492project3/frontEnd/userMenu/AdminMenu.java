@@ -32,13 +32,12 @@ public class AdminMenu {
         boolean running = true;
         while (running) {
             cont.decor.printDecoratedMenu("1.Create course.;2.Find course by name.;3.Get courses list.;4.Add data for testing.;0.Exit.", "ADMIN");
-            int userChoice = cont.userInput.getInt();
-            switch (userChoice) {
+            switch (cont.userInput.getInt()) {
                 case 1 -> newCourseMenu();
                 case 2 -> findCourseByName();
                 case 3 -> getCoursesList();
                 case 4 -> addDataForTesting();
-                case 0 -> running = false; // завершення програми
+                case 0 -> running = false;
                 default -> cont.message.printErrorMessage("Incorrect input. Try again.");
             }
         }
@@ -51,20 +50,10 @@ public class AdminMenu {
         } else {
             cont.message.printErrorMessage(response.getDescription());
             cont.decor.printDecoratedMenu("1.Try again.;0.Exit.", "");
-            int userChoice = cont.userInput.getInt();
-            switch (userChoice) {
-                case 1: {
-                    newCourseMenu();
-                    break;
-                }
-                case 0: {
-                    break;
-                }
-                default: {
-                    cont.message.printErrorMessage("Incorrect input");
-                    newCourseMenu();
-                    break;
-                }
+            switch (cont.userInput.getInt()) {
+                case 1 -> newCourseMenu();
+                case 0 -> {break;}
+                default ->  cont.message.printErrorMessage("Incorrect input");
             }
         }
     }

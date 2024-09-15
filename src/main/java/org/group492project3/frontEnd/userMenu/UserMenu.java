@@ -86,7 +86,6 @@ public class UserMenu {
             cont.decor.printDecoratedMenu("№.Enter number of course to get information.;O.Go to maim menu.", "");
             int userChoice = cont.userInput.getInt();
             if (userChoice == 0) {
-
             } else if (userChoice <= response.getElementOfOperation().size()) {
                 Response<Course, String> selectedCourse = api.getCourseInfo(response.getElementOfOperation().get(userChoice - 1).getId());
                 courseMenu(selectedCourse.getElementOfOperation());
