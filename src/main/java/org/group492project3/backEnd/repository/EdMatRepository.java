@@ -22,23 +22,20 @@ public class EdMatRepository {
                 .filter(edMat -> edMat.getIdOfCourse().equals(idCourse))
                 .toList();
     }
-/*
-    public String findByWordInDescription () {
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите слово для поиска в описании учебного материала.");
-        String stringFromUser = scanner.nextLine();
+
+   public boolean findByWordInDescription (String wordFromUser) {
 
         String forsearching = new String(materials.getFirst().getMaterialDescription().toLowerCase());
+        if (forsearching.contains(wordFromUser)) {
+                return true;
+            } else {
+                return false;
+            }
 
-        if (forsearching.contains(stringFromUser)) {
-            System.out.println("В этом описании есть слово: " + stringFromUser + "." );
-        } else {
-            System.out.println("Слова " + stringFromUser + " - в описании нет.");}
-
-        return stringFromUser;
     }
-*/
+
+
 
     public EducationalMaterials updateDescription(EducationalMaterials materialForUpdate) {
         materialForUpdate.setMaterialDescription(materialForUpdate.getMaterialDescription());
