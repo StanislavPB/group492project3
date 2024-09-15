@@ -48,13 +48,16 @@ public class Api {
     }
 
     public Response<List<Course>, String> getMyCoursesList(int studentId) {
-        // new NewUser(login, password, firstName, secondName);
-        return new Response<>(null, false, null); //plug
+        return cont.studentService.getCourseList(studentId);
     }
 
     public Response<List<Course>, String> getMyAnalytic(int studentId) {     //!  change "Course" on "Analytic"
         // new NewUser(login, password, firstName, secondName);
         return new Response<>(null, false, null); //plug
+    }
+
+    public Response<List<Course>, String> getAvailableCourseListForStudent(Student student) {
+        return cont.courseService.getCoursesStudentIsNotEnrolled(student);
     }
 
     public Response<Course, String> addNewCourse(String newCourseName) {     //!  change "Course" on "Analytic"
@@ -88,5 +91,9 @@ public class Api {
 
     public Response<Course, String> deleteCourse(Integer id) {
         return cont.courseService.deleteCourse(id);
+    }
+
+    public Student getStudentById(int id) {
+        return cont.studentService.findById(id).getElementOfOperation();
     }
 }

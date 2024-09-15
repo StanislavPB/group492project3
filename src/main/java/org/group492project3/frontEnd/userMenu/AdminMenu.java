@@ -49,7 +49,6 @@ public class AdminMenu {
                 break;
             }
             case 0: {
-                goToAdminMenu();
                 break;
             }
             default: {
@@ -135,7 +134,7 @@ public class AdminMenu {
         } else {
             cont.message.printErrorMessage("Incorrect input.");
         }
-        getCoursesList();
+        getCoursesList();//! переделать
     }
 
     private void courseMenu(Course course) {
