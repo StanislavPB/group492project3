@@ -29,7 +29,8 @@ public class EdMatRepository {
            if (currentItem.getMaterialDescription().toLowerCase().contains(wordFromUser)) {
                return currentItem;
            }
-       } return null;
+       }
+       return null;
    }
 
 
