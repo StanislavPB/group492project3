@@ -24,17 +24,15 @@ public class EdMatRepository {
     }
 
 
-/*
-   public boolean findByWordInDescription (String wordFromUser) {
+   public String findWordInDescription (String wordFromUser) {
 
-        String forsearching = new String(materials.getFirst().getMaterialDescription().toLowerCase());
-        if (forsearching.contains(wordFromUser)) {
-                return true;
-            } else {
-                return false;
-            }
-    }*/
-
+       for (EducationalMaterials currentItem : materials) {
+           if (currentItem.getMaterialDescription().toLowerCase().contains(wordFromUser)) {
+               return wordFromUser;
+           }
+       }
+       return null;
+   }
 
     public EducationalMaterials updateDescription(EducationalMaterials materialForUpdate) {
         materialForUpdate.setMaterialDescription(materialForUpdate.getMaterialDescription());
