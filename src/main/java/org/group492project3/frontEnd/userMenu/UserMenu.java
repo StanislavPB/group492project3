@@ -83,13 +83,9 @@ public class UserMenu {
 
                 }
             }
-
-
         } else {
             cont.message.printErrorMessage(response.getDescription());
         }
-
-
     }
 
     private void getMyCoursesList() {

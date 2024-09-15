@@ -5,6 +5,7 @@ import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.RegistrationResponce;
 import org.group492project3.backEnd.dto.Response;
+import org.group492project3.backEnd.entity.Student;
 
 public class Registration {
     Container cont;
@@ -19,7 +20,7 @@ public class Registration {
 
     public void startMenu() {
         cont.decor.printDecorativeLineWithWord("REGISTRATION MENU");
-        Response<RegistrationResponce, String> registrationResult = api.registration(cont.userInput.getString("Enter login:"), cont.userInput.getString("Enter password:"), cont.userInput.getString("Enter first name:"), cont.userInput.getString("Enter second name:"));
+        Response<Student, String> registrationResult = api.registration(cont.userInput.getString("Enter login:"), cont.userInput.getString("Enter password:"), cont.userInput.getString("Enter first name:"), cont.userInput.getString("Enter second name:"));
         cont.decor.printDecorativeLine();
         if (registrationResult.getStatusOfOperation()) {
             userMenu.start(getCurrentUserInfoForAutoLogin(registrationResult.getElementOfOperation()));
@@ -46,7 +47,7 @@ public class Registration {
         }
     }
 
-    private CurrentUser getCurrentUserInfoForAutoLogin(RegistrationResponce responseData) {
-        return new CurrentUser(responseData.getUserID(), responseData.getFirstName(), responseData.getSecondName());
+    private CurrentUser getCurrentUserInfoForAutoLogin(Student responseData) {
+        return new CurrentUser(responseData.getId(), responseData.getFirstName(), responseData.getLastName());
     }
 }

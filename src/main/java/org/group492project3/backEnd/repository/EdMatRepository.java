@@ -24,7 +24,7 @@ public class EdMatRepository {
     }
 
 
-   public boolean findByWordInDescription (String wordFromUser) {
+  /* public boolean findByWordInDescription (String wordFromUser) {
 
         String forsearching = new String(materials.getFirst().getMaterialDescription().toLowerCase());
         if (forsearching.contains(wordFromUser)) {
@@ -32,7 +32,7 @@ public class EdMatRepository {
             } else {
                 return false;
             }
-    }
+    }*/
 
 
 
