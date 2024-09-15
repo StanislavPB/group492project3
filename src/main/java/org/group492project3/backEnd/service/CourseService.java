@@ -113,6 +113,7 @@ public class CourseService {
         if(!allCourses.isEmpty()){
             List<Course> coursesForStudent = new ArrayList<>();
             for (int i = 0; i < allCourses.size(); i++) {
+
                 Course tempCourse = allCourses.get(i);
                 boolean isCourse = false;
                 List<Student> studentsList = tempCourse.getStudentList();
@@ -125,6 +126,8 @@ public class CourseService {
                     if(!isCourse){
                         coursesForStudent.add(tempCourse);
                     }
+                }else{
+                    coursesForStudent.add(tempCourse);
                 }
             }
             return new Response<>(coursesForStudent, true, "");
