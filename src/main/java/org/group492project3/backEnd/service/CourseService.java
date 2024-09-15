@@ -34,12 +34,12 @@ public class CourseService {
     }
 
 
-    public Response<Course, String> updateNote(Integer id, String courseName) {//! Simon need changed
+    public Response<Course, String> updateCourse(Integer id, String courseName) {
 
         Course courseForUpdate = repository.findById(id);
 
         if (courseForUpdate == null) {
-            return new Response<>(null, false, "Курс с id = " + id + " не найден");
+            return new Response<>(null, false, "Course with id = " + id + " not found.");
         }
 
         Course courseAfterUpdate = repository.updateCourse(courseForUpdate);
@@ -51,7 +51,7 @@ public class CourseService {
         Course courseForDelete = repository.findById(id);
 
         if (courseForDelete == null) {
-            return new Response<>(null, false, "Курс с id = " + id + " не найден. Удаление невозможно.");
+            return new Response<>(null, false, "Course with id = " + id + " not found. Removal is not possible.");
         }
 
         courseForDelete = repository.deleteCourse(courseForDelete);
@@ -63,7 +63,7 @@ public class CourseService {
         Course foundCourse = repository.findById(id);
 
         if (foundCourse == null) {
-            return new Response<>(null, false, "Курс с id = " + id + " не найден.");
+            return new Response<>(null, false, "Course with id = " + id + " not found.");
         } else {
             return new Response<>(foundCourse, true, "");
         }
@@ -74,7 +74,7 @@ public class CourseService {
         List<Course> foundCourses = repository.findByName(name);
 
         if (foundCourses.isEmpty()) {
-            return new Response<>(foundCourses, false, "Курсы с name = " + name + " не найдены.");
+            return new Response<>(foundCourses, false, "Courses with name = " + name + " not founded.");
         } else {
             return new Response<>(foundCourses, true, "");
         }
@@ -84,7 +84,7 @@ public class CourseService {
 
         List<Course> foundCourses = repository.findAllCourses();
         if (foundCourses.isEmpty()) {
-            return new Response<>(foundCourses, false, "Курсы не найдены. Database курсов пуст.");
+            return new Response<>(foundCourses, false, "Courses not founded. Course Database is empty.");
         } else {
             return new Response<>(foundCourses, true, "");
         }
@@ -92,13 +92,18 @@ public class CourseService {
     }
 
     public Response<String, String> renameCourse(Integer id, String name) {
+
+        String validationResult = validation.validateCourseName(name, repository.findAllCourses());
+        if (!validationResult.isEmpty()) {
+            return new Response<>(null, false, validationResult);
+        }
+
         Response<Course, String> foundCourse = findById(id);
-        if (name.length() < 3)
-            return new Response<>(foundCourse.getElementOfOperation().getName(), false, "Name " + name + " is too short(min-3).");
-        if (foundCourse.getStatusOfOperation()) {//! Firko maybe need to add validation
+       if (foundCourse.getStatusOfOperation()) {
             foundCourse.getElementOfOperation().setName(name);
             return new Response<>(null, true, "");
         }
+
         return new Response<>(foundCourse.getElementOfOperation().getName(), false, "Course with id=" + id + " didn't find.");
     }
 

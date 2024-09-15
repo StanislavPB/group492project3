@@ -23,7 +23,7 @@ public class EdMatRepository {
                 .toList();
     }
 
-
+/*
    public boolean findByWordInDescription (String wordFromUser) {
 
         String forsearching = new String(materials.getFirst().getMaterialDescription().toLowerCase());
@@ -33,7 +33,7 @@ public class EdMatRepository {
                 return false;
             }
     }
-
+*/
 
 
     public EducationalMaterials updateDescription(EducationalMaterials materialForUpdate) {
