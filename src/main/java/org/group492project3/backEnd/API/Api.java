@@ -1,10 +1,7 @@
 package org.group492project3.backEnd.API;
 
 import org.group492project3.backEnd.dto.*;
-import org.group492project3.backEnd.entity.Course;
-import org.group492project3.backEnd.entity.EducationalMaterials;
-import org.group492project3.backEnd.entity.Student;
-import org.group492project3.backEnd.entity.TestQuestions;
+import org.group492project3.backEnd.entity.*;
 import org.group492project3.backEnd.service.AuthorizationService;
 import org.group492project3.backEnd.service.fill.FillCourse;
 
@@ -92,14 +89,28 @@ public class Api {
         Response<Course, String> course = cont.courseService.findById(courseId);
         Response<Student, String> student = cont.studentService.findById(studentId);
         cont.courseService.addNewStudentToCourse(course.getElementOfOperation(), student.getElementOfOperation());
-        return new Response(null, true, "");
+        cont.studentService.addCourse(student.getElementOfOperation(), course.getElementOfOperation());
+        System.out.println("StudentId-" + studentId + "Course ID -" + courseId);
+        return new Response<>(null, true, "");
     }
 
     public Response<Course, String> deleteCourse(Integer id) {
         return cont.courseService.deleteCourse(id);
     }
 
+    public Response<Course, String> getCourseInfo(int id) {
+        return cont.courseService.findById(id);
+    }
+
     public Student getStudentById(int id) {
         return cont.studentService.findById(id).getElementOfOperation();
+    }
+
+    public Response<List<TestResult>, String> getTestingResultForStudentCourse(int courseId, int studentId) {
+        return cont.testResultService.getTestingResultsForStudentCourse(courseId, studentId);
+    }
+
+    public Response<TestResult, String> addTestResult(int courseId, int studentId, List<TestQuestions> questionsList, List<Integer> answersList) {
+        return cont.testResultService.addTestResult(courseId, studentId, questionsList, answersList);
     }
 }
