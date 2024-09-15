@@ -30,7 +30,7 @@ public class UserMenu {
     }
 
     private void startMenu() {
-        cont.decor.printDecoratedMenu("1.Sign up for a course.;2.Get a list of my courses.;0. Log out.", "STUDENT MENU");
+        cont.decor.printDecoratedMenu("1.Sign up for a course.;2.Get a list of my courses.;0.Log out.", "STUDENT MENU");
         int userChoice = cont.userInput.getInt();
         switch (userChoice) {
             case 1: {
@@ -42,7 +42,6 @@ public class UserMenu {
                 break;
             }
             case 0: {
-                exit(); //! add logic maybe with deleting user data
                 break;
             }
             default: {
@@ -72,8 +71,10 @@ public class UserMenu {
                     startMenu();
                 }
             }
+            startMenu();
         } else {
             cont.message.printErrorMessage(response.getDescription());
+            startMenu();
         }
     }
 
@@ -89,12 +90,14 @@ public class UserMenu {
                 startMenu();
             } else if (userChoice <= response.getElementOfOperation().size()) {
                 Response<Course, String> selectedCourse = api.getCourseInfo(response.getElementOfOperation().get(userChoice - 1).getId());
+                courseMenu(selectedCourse.getElementOfOperation());
             } else {
                 cont.message.printErrorMessage("Incorrect input.Try again.");
                 getMyCoursesList();
             }
         } else {
             cont.message.printErrorMessage(response.getDescription());
+            startMenu();
         }
     }
 
@@ -120,44 +123,64 @@ public class UserMenu {
             }
         } else {
             cont.message.printErrorMessage("Incorrect input.Try again.");
+            startMenu();
         }
-        startMenu();
     }
 
     private void startTestForCurrentCourse(Course course) {
         List<TestQuestions> questionList = course.getTestQuestionsList();
-        int courseId = course.getId();
-        List<Integer> studentAnswers = new ArrayList<>();
-        for (TestQuestions question : questionList) {
-            System.out.println(question.getQuestion());
-            for (int i = 1; i <= question.getAnswersMap().size(); i++) {
-                System.out.println(cont.decor.getRedText(i + ".") + question.getAnswersMap().get(i));
+        if (questionList != null) {
+            int courseId = course.getId();
+            List<Integer> studentAnswers = new ArrayList<>();
+            for (int i = 1; i <= questionList.size(); i++) {
+                cont.decor.printDecorativeLine();
+                System.out.println("Вопрос '" + i + "' из '" + questionList.size() + "' " + questionList.get(i - 1).getQuestion());
+                for (int j = 1; j <= questionList.get(i - 1).getAnswersMap().size(); j++) {
+                    System.out.println(cont.decor.getRedText(j + ".") + questionList.get(i - 1).getAnswersMap().get(j));
+                }
+                System.out.print("Enter number of answer: ");
+                studentAnswers.add(cont.userInput.getInt());
+                cont.decor.printDecorativeLine();
             }
-            System.out.println("Enter number of answer: ");
-            studentAnswers.add(cont.userInput.getInt());
+            Response<TestResult, String> testResponse = api.addTestResult(courseId, userData.getUserId(), questionList, studentAnswers);
+            System.out.println("The result of correct answers is " + cont.decor.getGreenText(testResponse.getElementOfOperation().getPercentOfCorrectAnswers() + "") + cont.decor.getRedText("%"));
         }
-        Response<TestResult, String> testResponse = api.addTestResult(courseId, userData.getUserId(), questionList, studentAnswers);
-        System.out.println("The result of correct answers is " + cont.decor.getGreenText(testResponse.getElementOfOperation().getPercentOfCorrectAnswers() + "") + cont.decor.getRedText("%"));
         getTestResults(course);
     }
 
     private void getMaterialsForCurrentCourse(Course course) {
         List<EducationalMaterials> materials = course.getEducationalMaterialsList();
-        for (EducationalMaterials element : materials) {
-            System.out.println(element.getMaterialType());
+        if (materials != null) {
+            for (EducationalMaterials element : materials) {
+                System.out.println(element.getMaterialType());
+                System.out.println(element.getMaterialDescription());
+            }
+        } else {
+            cont.message.printErrorMessage("Materials for the course is empty.");
         }
+        courseMenu(course);
     }
 
     private void getTestResults(Course course) {
         int courseId = course.getId();
         Response<List<TestResult>, String> testResults = api.getTestingResultForStudentCourse(courseId, userData.getUserId());
-        for (int i = 0; i < testResults.getElementOfOperation().size(); i++) {
-            System.out.println("Testing data: " + testResults.getElementOfOperation().get(i).getDateOfTesting() + " Percent of right answers: " + testResults.getElementOfOperation().get(i).getPercentOfCorrectAnswers() + "%");
-        }
-        cont.decor.printDecoratedMenu("1.Try again.;0.Go to course menu.", "");
-        int userChoice = cont.userInput.getInt();
-        if (userChoice == 0) {
-
+        if (testResults.getStatusOfOperation()) {
+            for (int i = 0; i < testResults.getElementOfOperation().size(); i++) {
+                System.out.println(cont.decor.getRedText(i + 1 + "") + ".Testing data: " + cont.decor.getEloyText(testResults.getElementOfOperation().get(i).getDateOfTesting() + "") + " Percent of right answers: " + cont.decor.getGreenText(testResults.getElementOfOperation().get(i).getPercentOfCorrectAnswers() + "") + cont.decor.getRedText("%"));
+            }
+            cont.decor.printDecoratedMenu("1.Try again.;0.Go to course menu.", "");
+            int userChoice = cont.userInput.getInt();
+            if (userChoice == 0) {
+                courseMenu(course);
+            } else if (userChoice == 1) {
+                startTestForCurrentCourse(course);
+            } else {
+                cont.message.printErrorMessage("Incorrect input.");
+                getTestResults(course);
+            }
+        } else {
+            cont.message.printErrorMessage(testResults.getDescription());
+            courseMenu(course);
         }
     }
 
@@ -176,9 +199,5 @@ public class UserMenu {
                 tryAgainMenu();
             }
         }
-    }
-
-    private void exit() {
-
     }
 }
