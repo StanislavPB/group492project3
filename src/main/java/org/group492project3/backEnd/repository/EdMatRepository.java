@@ -26,15 +26,11 @@ public class EdMatRepository {
 
    public boolean findByWordInDescription (String wordFromUser) {
 
-        String forsearching = new String(materials.getFirst().getMaterialDescription().toLowerCase());
-        if (forsearching.contains(wordFromUser)) {
-                return true;
-            } else {
-                return false;
-            }
-    }
-
-
+       for (EducationalMaterials currentItem : materials) {
+           if (currentItem.getMaterialDescription().contains(wordFromUser)) {
+               return true;}
+       } return false;
+   }
 
     public EducationalMaterials updateDescription(EducationalMaterials materialForUpdate) {
         materialForUpdate.setMaterialDescription(materialForUpdate.getMaterialDescription());
