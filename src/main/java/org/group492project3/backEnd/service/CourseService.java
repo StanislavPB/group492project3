@@ -130,6 +130,9 @@ public class CourseService {
                     coursesForStudent.add(tempCourse);
                 }
             }
+            if(coursesForStudent.isEmpty()){
+                return new Response<>(null, false, "There are no courses at DB that you can enroll in.");
+            }
             return new Response<>(coursesForStudent, true, "");
         }else{
             return new Response<>(null, false, "There are no courses at DB that you can enroll in.");
