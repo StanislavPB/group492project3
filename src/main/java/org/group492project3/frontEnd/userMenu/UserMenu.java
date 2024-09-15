@@ -4,9 +4,9 @@ import org.group492project3.backEnd.API.Api;
 import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.Response;
-import org.group492project3.backEnd.entity.Course;
-import org.group492project3.backEnd.entity.Student;
+import org.group492project3.backEnd.entity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserMenu {
@@ -26,12 +26,11 @@ public class UserMenu {
 
     public void start(CurrentUser userData) {
         rememberUserDataAndWelcome(userData);
-        startMenu(userData);
+        startMenu();
     }
 
-    private void startMenu(CurrentUser userData) {
-
-        cont.decor.printDecoratedMenu("1.Sign up for a course.;2.Get a list of my courses.;3.My progress analytic.;0. Log out.", "STUDENT MENU");
+    private void startMenu() {
+        cont.decor.printDecoratedMenu("1.Sign up for a course.;2.Get a list of my courses.;0. Log out.", "STUDENT MENU");
         int userChoice = cont.userInput.getInt();
         switch (userChoice) {
             case 1: {
@@ -40,10 +39,6 @@ public class UserMenu {
             }
             case 2: {
                 getMyCoursesList();
-                break;
-            }
-            case 3: {
-                getMyProgressAnalytic();
                 break;
             }
             case 0: {
@@ -59,16 +54,9 @@ public class UserMenu {
     }
 
     private void getCourseList() {
-    /*
         Student studentForSearching = api.getStudentById(userData.getUserId());
-        Response<List<Course>, String> listCoursesResponse = api.getAvailableCourseListForStudent(studentForSearching);
-        if (listCoursesResponse.getStatusOfOperation()) {
-            for (int i = 0; i < listCoursesResponse.getElementOfOperation().size(); i++) {
-                System.out.println(cont.decor.getRedText(i + 1 + "") + "." + listCoursesResponse.getElementOfOperation().get(i));
-            }
-*/
         boolean tryAgain = true;
-        Response<List<Course>, String> response = null;//api.getAvailableCoursListForCurrentStudent();
+        Response<List<Course>, String> response = api.getAvailableCourseListForStudent(studentForSearching);
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
                 System.out.println(cont.decor.getRedText(i + 1 + "") + "." + response.getElementOfOperation().get(i).getName());
@@ -78,9 +66,10 @@ public class UserMenu {
                 int userChoice = cont.userInput.getInt();
                 if (userChoice == 0) {
                     tryAgain = false;
-                    startMenu(userData);
+                    startMenu();
                 } else if (userChoice - 1 < response.getElementOfOperation().size()) {
-
+                    api.enrollInTheCourse(userData.getUserId(), response.getElementOfOperation().get(userChoice - 1).getId());
+                    startMenu();
                 }
             }
         } else {
@@ -92,23 +81,83 @@ public class UserMenu {
         Response<List<Course>, String> response = api.getMyCoursesList(userData.getUserId());
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
-                System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
+                System.out.println(cont.decor.getRedText(i + 1 + "") + "." + response.getElementOfOperation().get(i).getName());
             }
-            cont.decor.printDecoratedMenu("№.Enter number of course to enrol.;O.Go to maim menu.","");
+            cont.decor.printDecoratedMenu("№.Enter number of course to get information.;O.Go to maim menu.", "");
+            int userChoice = cont.userInput.getInt();
+            if (userChoice == 0) {
+                startMenu();
+            } else if (userChoice <= response.getElementOfOperation().size()) {
+                Response<Course, String> selectedCourse = api.getCourseInfo(response.getElementOfOperation().get(userChoice - 1).getId());
+            } else {
+                cont.message.printErrorMessage("Incorrect input.Try again.");
+                getMyCoursesList();
+            }
         } else {
             cont.message.printErrorMessage(response.getDescription());
         }
     }
-    //private void enrolStudentOnCourse.
 
-    private void getMyProgressAnalytic() {
-        Response<List<Course>, String> response = api.getMyAnalytic(userData.getUserId());
-        if (response.getStatusOfOperation()) {
-            for (int i = 0; i < response.getElementOfOperation().size(); i++) {
-                System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
+    private void courseMenu(Course currentCourse) {
+        cont.decor.printDecoratedMenu("1.Materials of course.;2.Test result.;3.Start course test.;0.Go to main menu.", "COURSE MENU");
+        int userChoice = cont.userInput.getInt();
+        if (userChoice == 0) {
+            startMenu();
+        } else if (userChoice <= 3) {
+            switch (userChoice) {
+                case 1: {
+                    getMaterialsForCurrentCourse(currentCourse);
+                    break;
+                }
+                case 2: {
+                    getTestResults(currentCourse);
+                    break;
+                }
+                case 3: {
+                    startTestForCurrentCourse(currentCourse);
+                    break;
+                }
             }
         } else {
-            cont.message.printErrorMessage(response.getDescription());
+            cont.message.printErrorMessage("Incorrect input.Try again.");
+        }
+        startMenu();
+    }
+
+    private void startTestForCurrentCourse(Course course) {
+        List<TestQuestions> questionList = course.getTestQuestionsList();
+        int courseId = course.getId();
+        List<Integer> studentAnswers = new ArrayList<>();
+        for (TestQuestions question : questionList) {
+            System.out.println(question.getQuestion());
+            for (int i = 1; i <= question.getAnswersMap().size(); i++) {
+                System.out.println(cont.decor.getRedText(i + ".") + question.getAnswersMap().get(i));
+            }
+            System.out.println("Enter number of answer: ");
+            studentAnswers.add(cont.userInput.getInt());
+        }
+        Response<TestResult, String> testResponse = api.addTestResult(courseId, userData.getUserId(), questionList, studentAnswers);
+        System.out.println("The result of correct answers is " + cont.decor.getGreenText(testResponse.getElementOfOperation().getPercentOfCorrectAnswers() + "") + cont.decor.getRedText("%"));
+        getTestResults(course);
+    }
+
+    private void getMaterialsForCurrentCourse(Course course) {
+        List<EducationalMaterials> materials = course.getEducationalMaterialsList();
+        for (EducationalMaterials element : materials) {
+            System.out.println(element.getMaterialType());
+        }
+    }
+
+    private void getTestResults(Course course) {
+        int courseId = course.getId();
+        Response<List<TestResult>, String> testResults = api.getTestingResultForStudentCourse(courseId, userData.getUserId());
+        for (int i = 0; i < testResults.getElementOfOperation().size(); i++) {
+            System.out.println("Testing data: " + testResults.getElementOfOperation().get(i).getDateOfTesting() + " Percent of right answers: " + testResults.getElementOfOperation().get(i).getPercentOfCorrectAnswers() + "%");
+        }
+        cont.decor.printDecoratedMenu("1.Try again.;0.Go to course menu.", "");
+        int userChoice = cont.userInput.getInt();
+        if (userChoice == 0) {
+
         }
     }
 
@@ -117,7 +166,7 @@ public class UserMenu {
         int userChoice = cont.userInput.getInt();
         switch (userChoice) {
             case 1: {
-                startMenu(userData);
+                startMenu();
             }
             case 0: {
                 break;
