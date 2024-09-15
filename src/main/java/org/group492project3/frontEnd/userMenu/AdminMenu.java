@@ -29,31 +29,17 @@ public class AdminMenu {
     }
 
     private void start() {
-        cont.decor.printDecoratedMenu("1.Create course.;2.Find course by name.;3.Get courses list.;4.Add data for testing.;0.Exit.", "ADMIN");
-        int userChoice = cont.userInput.getInt();
-        switch (userChoice) {
-            case 1: {
-                newCourseMenu();
-                break;
-            }
-            case 2: {
-                findCourseByName();
-                break;
-            }
-            case 3: {
-                getCoursesList();
-                break;
-            }
-            case 4: {
-                addDataForTesting();
-                break;
-            }
-            case 0: {
-                break;
-            }
-            default: {
-                cont.message.printErrorMessage("Incorrect input.Try again.");
-                start();
+        boolean running = true;
+        while (running) {
+            cont.decor.printDecoratedMenu("1.Create course.;2.Find course by name.;3.Get courses list.;4.Add data for testing.;0.Exit.", "ADMIN");
+            int userChoice = cont.userInput.getInt();
+            switch (userChoice) {
+                case 1 -> newCourseMenu();
+                case 2 -> findCourseByName();
+                case 3 -> getCoursesList();
+                case 4 -> addDataForTesting();
+                case 0 -> running = false; // завершення програми
+                default -> cont.message.printErrorMessage("Incorrect input. Try again.");
             }
         }
     }
@@ -72,7 +58,6 @@ public class AdminMenu {
                     break;
                 }
                 case 0: {
-                    goToAdminMenu();
                     break;
                 }
                 default: {
@@ -82,7 +67,6 @@ public class AdminMenu {
                 }
             }
         }
-        goToAdminMenu();
     }
 
     private void findCourseByName() {
@@ -100,25 +84,24 @@ public class AdminMenu {
                 int userChoice = cont.userInput.getInt();
                 if (userChoice == 0) {
                     tryAgain = false;
-                    goToAdminMenu();
+                    tryAgain1 = false;
                 } else if (userChoice == 1) {
                     findCourseByName();
                 } else {
-                    goToAdminMenu();
+                    cont.message.printErrorMessage("Incorrect input.");
                 }
             }
-        }
-        while (tryAgain1) {
-            cont.decor.printDecoratedMenu(" Enter number of course for editing.;0.Go to admin menu.", "");
-            int userChoice = cont.userInput.getInt();
-            if (userChoice == 0) {
-                tryAgain1 = false;
-                goToAdminMenu();
-            } else if (userChoice - 1 < requestResult.getElementOfOperation().size()) {
-                tryAgain1 = false;
-                courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));
-            } else {
-                cont.message.printErrorMessage("Incorrect input.");
+            while (tryAgain1) {
+                cont.decor.printDecoratedMenu(" Enter number of course for editing.;0.Go to admin menu.", "");
+                int userChoice = cont.userInput.getInt();
+                if (userChoice == 0) {
+                    tryAgain1 = false;
+                } else if (userChoice - 1 < requestResult.getElementOfOperation().size()) {
+                    tryAgain1 = false;
+                    courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));
+                } else {
+                    cont.message.printErrorMessage("Incorrect input.");
+                }
             }
         }
     }
@@ -139,7 +122,6 @@ public class AdminMenu {
             int userChoice = cont.userInput.getInt();
             if (userChoice == 0) {
                 tryAgain = false;
-                goToAdminMenu();
             } else if (userChoice <= requestResult.getElementOfOperation().size()) {
                 courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));//!sadasdad
                 tryAgain = false;
@@ -151,30 +133,29 @@ public class AdminMenu {
 
     private void courseMenu(Course course) {
         cont.decor.printDecoratedMenu("1.List of course students.;2.Show course materials.;3.Show test list for course.;4.Edit name of course.;5.Delete this course.;0.Go back.", "COURSE MENU");
-        String userChoice = cont.userInput.getString();
+        int userChoice = cont.userInput.getInt();
         switch (userChoice) {
-            case "1": {
+            case 1: {
                 courseStudentList(course);
                 break;
             }
-            case "2": {
+            case 2: {
                 showCourseMaterials(course);
                 break;
             }
-            case "3": {
+            case 3: {
                 showTestListForCourse(course);
                 break;
             }
-            case "4": {
+            case 4: {
                 editNameOfTheCourse(course);
                 break;
             }
-            case "5": {
+            case 5: {
                 deleteThisCourse(course);
                 break;
             }
-            case "0": {
-                goToAdminMenu();
+            case 0: {
                 break;
             }
 
@@ -193,7 +174,6 @@ public class AdminMenu {
         } else {
             cont.message.printErrorMessage(deletingResponse.getDescription());
         }
-        goToAdminMenu();
     }
 
     private void editNameOfTheCourse(Course course) {
@@ -260,7 +240,6 @@ public class AdminMenu {
     private void addDataForTesting() {
         api.fillDataBaseForTesting();
         cont.message.printSuccessMessage("Data has been added to the repository successfully.");
-        goToAdminMenu();
     }
 
     private void editCourseMenu(int numberOfCourse) {
