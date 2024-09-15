@@ -122,7 +122,7 @@ public class CourseService {
                     }
                 }
             }
-            return new Response<>(coursesForStudent, false, "");
+            return new Response<>(coursesForStudent, true, "");
         }else{
             return new Response<>(null, false, "There are no courses at DB that you can enroll in.");
         }

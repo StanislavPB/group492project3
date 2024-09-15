@@ -5,6 +5,7 @@ import org.group492project3.backEnd.API.Container;
 import org.group492project3.backEnd.dto.CurrentUser;
 import org.group492project3.backEnd.dto.Response;
 import org.group492project3.backEnd.entity.Course;
+import org.group492project3.backEnd.entity.Student;
 
 import java.util.List;
 
@@ -58,6 +59,14 @@ public class UserMenu {
     }
 
     private void getCourseList() {
+    /*
+        Student studentForSearching = api.getStudentById(userData.getUserId());
+        Response<List<Course>, String> listCoursesResponse = api.getAvailableCourseListForStudent(studentForSearching);
+        if (listCoursesResponse.getStatusOfOperation()) {
+            for (int i = 0; i < listCoursesResponse.getElementOfOperation().size(); i++) {
+                System.out.println(cont.decor.getRedText(i + 1 + "") + "." + listCoursesResponse.getElementOfOperation().get(i));
+            }
+*/
         boolean tryAgain = true;
         Response<List<Course>, String> response = null;//api.getAvailableCoursListForCurrentStudent();
         if (response.getStatusOfOperation()) {
@@ -89,10 +98,12 @@ public class UserMenu {
             for (int i = 0; i < response.getElementOfOperation().size(); i++) {
                 System.out.println(i + 1 + " " + response.getElementOfOperation().get(i));
             }
+            cont.decor.printDecoratedMenu("№.Enter number of course to enrol.;O.Go to maim menu.","");
         } else {
             cont.message.printErrorMessage(response.getDescription());
         }
     }
+    //private void enrolStudentOnCourse.
 
     private void getMyProgressAnalytic() {
         Response<List<Course>, String> response = api.getMyAnalytic(userData.getUserId());
@@ -125,112 +136,4 @@ public class UserMenu {
     private void exit() {
 
     }
-
-/*
-
-
-
-    private void userMenu() {
-
-    }
-
-    private void registrationMenu() {
-        decor.printDecorativeLine();
-        Response<NewUserRequest, String> registrationResult = api.registration(
-                userInput.getString("Enter login:"),
-                userInput.getString("Enter password:"),
-                userInput.getString("Enter first name:"),
-                userInput.getString("Enter second name:"));
-        decor.printDecorativeLine();
-        if (registrationResult.getStatusOfOperation()) {
-            message.printSuccessMessage("User successfully added.");
-            //TODO: goToMainUserMenu();
-        } else {
-            message.printErrorMessage(registrationResult.getDescription());
-            startUserInterface();
-        }
-    }
-
-    private void loginToAdminMenu() {
-        Response<LoginUserResponse, String> loginResult = api.authorisationToAdminMenu(userInput.getString("Enter login:"), userInput.getString("Enter password:"));
-        if (loginResult.getStatusOfOperation()) {
-            goToAdminMenu();
-        } else {
-            message.printErrorMessage(loginResult.getDescription());
-            startUserInterface();
-        }
-    }
-
-
-
-    private void createNewCourseMenu() {
-        Response<Api.newCourse, String> creatingResult = api.createNewCourse(userInput.getString("Enter name of course:"));
-        if (creatingResult.getStatusOfOperation()) {
-            message.printSuccessMessage("Course was successfully created.");
-        } else {
-            message.printErrorMessage(creatingResult.getDescription());
-            createNewCourseMenu();
-        }
-    }
-
-    //! Check it later
-    private void findCourseByName() {
-      /*  Response<Course, String> findingResult = api.findCourseByName(userInput.getString("Enter name of course:"));
-        if (findingResult.getStatusOfOperation()) {
-            editCourseNameMenu();
-        } else {
-            message.printErrorMessage(findingResult.getDescription());
-            findCourseByName();
-        }
-    }
-
-    *  Course courseAfterEditing = editCourse(findingResult.getElementOfOperation());
-            Response<Course, ArrayList<String>> resultOfUpdating = api.updateCourse(courseAfterEditing);
-            if (resultOfUpdating.getStatusOfOperation()) {
-                message.printSuccessMessage("Course was successfully updated.");
-                goToAdminMenu();
-            } else {
-                message.printErrorMessage(resultOfUpdating.getDescription().toString());
-                findCourseByName();
-
-    //! TODOFinish this metod
-
-
-    private Course editCourse(Course courseForAdding) {
-        Course oldVersionOfCourse = courseForAdding;
-        editCourseNameMenu();
-        return null;
-    }
-
-
-    private void editCourseNameMenu() {
-        switch (userInput.getInt(
-                decor.getDecorativeLine() +
-                        "Enter number of item to continue:\n" +
-                        decor.getEloyText("1") + ".Edit name of course.\n" +
-                        decor.getEloyText("0") + ".Exit to Admin menu.\n" +
-                        decor.getDecorativeLine() + "Enter number:"
-        )) {
-            case 1: {
-
-                break;
-            }
-            case 0: {
-                goToAdminMenu();
-                break;
-            }
-            default: {
-                message.printErrorMessage("Incorrect input.Try again.");
-                goToAdminMenu();
-            }
-        }
-    }
-
-    private void exitFromAccount() {
-        userID = 0;
-        startUserInterface();
-    }
-
-    private Response<String, String> editNameOfCourse() {
-    }*/
 }

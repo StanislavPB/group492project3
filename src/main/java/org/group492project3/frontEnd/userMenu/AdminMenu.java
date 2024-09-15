@@ -134,7 +134,7 @@ public class AdminMenu {
         } else {
             cont.message.printErrorMessage("Incorrect input.");
         }
-        getCoursesList();
+        getCoursesList();//! переделать
     }
 
     private void courseMenu(Course course) {
