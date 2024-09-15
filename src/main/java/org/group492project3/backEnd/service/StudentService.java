@@ -74,7 +74,7 @@ public class StudentService {
 
         List<Course> courseList = studRepository.getCourseList(student);
         if(courseList.size() == 0){
-            return new Response<>(null,false,"Курсы у студента " + student.getLastName() + " отсутствуют.");
+            return new Response<>(null,false,"The student " + student.getLastName() + " has no courses.");
         }
 
         return new Response<>(courseList, true, "");

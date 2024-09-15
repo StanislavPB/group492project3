@@ -96,14 +96,21 @@ public class FillCourse {
             Response<Student, String> studentResponse1 = cont.studentService.addStudent("Ivan", "Ivanov", "login1", "pass111");
             if (studentResponse1.getStatusOfOperation()) {
                 courseJava.addStudentToList(studentResponse1.getElementOfOperation());
+                Student student1 = studentResponse1.getElementOfOperation();
+                student1.addCourse(courseJava);
+                //!------- dobavitj v studenta cursy!!
             }
             Response<Student, String> studentResponse2 = cont.studentService.addStudent("Petr", "Petrov", "login2", "pass222");
             if (studentResponse2.getStatusOfOperation()) {
                 courseJava.addStudentToList(studentResponse2.getElementOfOperation());
+                Student student2 = studentResponse2.getElementOfOperation();
+                student2.addCourse(courseJava);
             }
             Response<Student, String> studentResponse3 = cont.studentService.addStudent("Sidr", "Sidorov", "login3", "pass333");
             if (studentResponse3.getStatusOfOperation()) {
                 courseJava.addStudentToList(studentResponse3.getElementOfOperation());
+                Student student3 = studentResponse3.getElementOfOperation();
+                student3.addCourse(courseJava);
             }
 
         }
@@ -188,14 +195,20 @@ public class FillCourse {
             Response<Student, String> studentResponse4 = cont.studentService.addStudent("Alex", "Alexandrov", "login4", "pass444");
             if (studentResponse4.getStatusOfOperation()) {
                 courseJava2.addStudentToList(studentResponse4.getElementOfOperation());
+                Student student4 = studentResponse4.getElementOfOperation();
+                student4.addCourse(courseJava2);
             }
             Response<Student, String> studentResponse5 = cont.studentService.addStudent("Dmitri", "Dmitrov", "login5", "pass555");
             if (studentResponse5.getStatusOfOperation()) {
                 courseJava2.addStudentToList(studentResponse5.getElementOfOperation());
+                Student student5 = studentResponse5.getElementOfOperation();
+                student5.addCourse(courseJava2);
             }
             Response<Student, String> studentResponse6 = cont.studentService.addStudent("Valerij", "Leontjev", "login6", "pass666");
             if (studentResponse6.getStatusOfOperation()) {
                 courseJava2.addStudentToList(studentResponse6.getElementOfOperation());
+                Student student6 = studentResponse6.getElementOfOperation();
+                student6.addCourse(courseJava2);
             }
 
         }
