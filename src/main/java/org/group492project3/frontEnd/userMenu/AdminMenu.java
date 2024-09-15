@@ -49,7 +49,6 @@ public class AdminMenu {
                 break;
             }
             case 0: {
-                goToAdminMenu();
                 break;
             }
             default: {
