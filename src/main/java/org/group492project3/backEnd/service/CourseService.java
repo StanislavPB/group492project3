@@ -138,7 +138,7 @@ public class CourseService {
     }
 
     //---------------------------------------   EducationalMaterials ------------------------------------
-    public Response<List<EducationalMaterials>, String> getEducationalMaterialsToCourse(Integer id) {   //! Firko
+    public Response<List<EducationalMaterials>, String> getEducationalMaterialsToCourse(Integer id) {
         List<EducationalMaterials> foundEducationMaterials = findById(id).getElementOfOperation().getEducationalMaterialsList();
         if (foundEducationMaterials.isEmpty()) {
             return new Response<>(null, false, "Materials for this course are empty.");

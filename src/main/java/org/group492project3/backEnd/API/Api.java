@@ -47,11 +47,6 @@ public class Api {
         return cont.studentService.getCourseList(studentId);
     }
 
-    public Response<List<Course>, String> getMyAnalytic(int studentId) {     //!  change "Course" on "Analytic"
-        // new NewUser(login, password, firstName, secondName);
-        return new Response<>(null, false, null); //plug
-    }
-
     public Response<List<Course>, String> getAvailableCourseListForStudent(Student student) {
         return cont.courseService.getCoursesStudentIsNotEnrolled(student);
     }
@@ -90,7 +85,6 @@ public class Api {
         Response<Student, String> student = cont.studentService.findById(studentId);
         cont.courseService.addNewStudentToCourse(course.getElementOfOperation(), student.getElementOfOperation());
         cont.studentService.addCourse(student.getElementOfOperation(), course.getElementOfOperation());
-        System.out.println("StudentId-" + studentId + "Course ID -" + courseId);
         return new Response<>(null, true, "");
     }
 
