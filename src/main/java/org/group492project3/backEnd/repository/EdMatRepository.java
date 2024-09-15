@@ -23,6 +23,7 @@ public class EdMatRepository {
                 .toList();
     }
 
+
 /*
    public boolean findByWordInDescription (String wordFromUser) {
 
@@ -32,8 +33,7 @@ public class EdMatRepository {
             } else {
                 return false;
             }
-    }
-*/
+    }*/
 
 
     public EducationalMaterials updateDescription(EducationalMaterials materialForUpdate) {

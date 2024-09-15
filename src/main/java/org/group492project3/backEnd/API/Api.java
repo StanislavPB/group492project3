@@ -34,9 +34,8 @@ public class Api {
         return new Response<>(null, false, loginResult.getDescription());
     }
 
-    public Response<RegistrationResponce, String> registration(String login, String password, String firstName, String secondName) {
-        // new NewUser(login, password, firstName, secondName);
-        return new Response<>(null, false, null); //plug
+    public Response<Student, String> registration(String login, String password, String firstName, String secondName) {
+        return cont.studentService.addStudent(firstName, secondName, login, password);
     }
 
     public Response<List<Course>, String> getCoursesList() {  //! need rewrite this method
