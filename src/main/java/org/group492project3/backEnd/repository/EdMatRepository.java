@@ -25,11 +25,11 @@ public class EdMatRepository {
 
 
    public boolean findByWordInDescription (String wordFromUser) {
-
        for (EducationalMaterials currentItem : materials) {
            if (currentItem.getMaterialDescription().contains(wordFromUser)) {
                return true;}
-       } return false;
+       }
+       return false;
    }
 
     public EducationalMaterials updateDescription(EducationalMaterials materialForUpdate) {
@@ -46,6 +46,5 @@ public class EdMatRepository {
             }
         }
         return null;
-
     }
 }
