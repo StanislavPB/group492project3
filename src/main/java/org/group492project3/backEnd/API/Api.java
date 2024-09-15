@@ -107,4 +107,8 @@ public class Api {
     public Response<TestResult, String> addTestResult(int courseId, int studentId, List<TestQuestions> questionsList, List<Integer> answersList) {
         return cont.testResultService.addTestResult(courseId, studentId, questionsList, answersList);
     }
+
+    public Response<Double, String> getBestTestResultForStudentInTheCourse(Integer courseId, Integer studentId) {
+        return cont.testResultService.getBestTestingResultsForStudentCourse(courseId, studentId);
+    }
 }

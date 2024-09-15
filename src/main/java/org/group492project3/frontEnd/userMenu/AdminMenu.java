@@ -52,8 +52,10 @@ public class AdminMenu {
             cont.decor.printDecoratedMenu("1.Try again.;0.Exit.", "");
             switch (cont.userInput.getInt()) {
                 case 1 -> newCourseMenu();
-                case 0 -> {break;}
-                default ->  cont.message.printErrorMessage("Incorrect input");
+                case 0 -> {
+                    break;
+                }
+                default -> cont.message.printErrorMessage("Incorrect input");
             }
         }
     }
@@ -207,7 +209,13 @@ public class AdminMenu {
         if (!studentsFromCourse.isEmpty()) {
             while (exit) {
                 for (int i = 0; i < studentsFromCourse.size(); i++) {
-                    System.out.println(cont.decor.getRedText(i + 1 + "") + "." + studentsFromCourse.get(i).getFirstName() + " " + studentsFromCourse.get(i).getLastName());
+                    Response<Double, String> bestTestResult = api.getBestTestResultForStudentInTheCourse(course.getId(), studentsFromCourse.get(i).getId());
+                    if (bestTestResult.getStatusOfOperation()) {
+                        System.out.println(cont.decor.getRedText(i + 1 + "") + "." + studentsFromCourse.get(i).getFirstName() + " " + studentsFromCourse.get(i).getLastName() + " " + cont.decor.getGreenText(bestTestResult.getElementOfOperation() + "") + cont.decor.getRedText("%"));
+                    } else {
+                        System.out.println(cont.decor.getRedText(i + 1 + "") + "." + studentsFromCourse.get(i).getFirstName() + " " + studentsFromCourse.get(i).getLastName() + " " + cont.decor.getRedText(bestTestResult.getDescription()));
+                    }
+
                 }
                 cont.decor.printDecoratedMenu("№.Enter student number for deleting.;0.Go back", "");
                 int userChoice = cont.userInput.getInt();
@@ -229,13 +237,5 @@ public class AdminMenu {
     private void addDataForTesting() {
         api.fillDataBaseForTesting();
         cont.message.printSuccessMessage("Data has been added to the repository successfully.");
-    }
-
-    private void editCourseMenu(int numberOfCourse) {
-
-    }
-
-    public void goToAdminMenu() {
-        start();
     }
 }
