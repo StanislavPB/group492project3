@@ -30,24 +30,27 @@ public class UserMenu {
     }
 
     private void startMenu() {
-        cont.decor.printDecoratedMenu("1.Sign up for a course.;2.Get a list of my courses.;0.Log out.", "STUDENT MENU");
-        int userChoice = cont.userInput.getInt();
-        switch (userChoice) {
-            case 1: {
-                getCourseList();
-                break;
-            }
-            case 2: {
-                getMyCoursesList();
-                break;
-            }
-            case 0: {
-                break;
-            }
-            default: {
-                cont.message.printErrorMessage("Incorrect input");
-                tryAgainMenu();
-                break;
+        boolean running = true;
+        while (running) {
+            cont.decor.printDecoratedMenu("1.Sign up for new course.;2.Get a list of my courses.;0.Log out.", "STUDENT MENU");
+            int userChoice = cont.userInput.getInt();
+            switch (userChoice) {
+                case 1: {
+                    getCourseList();
+                    break;
+                }
+                case 2: {
+                    getMyCoursesList();
+                    break;
+                }
+                case 0: {
+                    running = false;
+                }
+                default: {
+                    cont.message.printErrorMessage("Incorrect input");
+                    tryAgainMenu();
+                    break;
+                }
             }
         }
     }
@@ -65,16 +68,12 @@ public class UserMenu {
                 int userChoice = cont.userInput.getInt();
                 if (userChoice == 0) {
                     tryAgain = false;
-                    startMenu();
                 } else if (userChoice - 1 < response.getElementOfOperation().size()) {
                     api.enrollInTheCourse(userData.getUserId(), response.getElementOfOperation().get(userChoice - 1).getId());
-                    startMenu();
                 }
             }
-            startMenu();
         } else {
             cont.message.printErrorMessage(response.getDescription());
-            startMenu();
         }
     }
 
@@ -87,7 +86,7 @@ public class UserMenu {
             cont.decor.printDecoratedMenu("№.Enter number of course to get information.;O.Go to maim menu.", "");
             int userChoice = cont.userInput.getInt();
             if (userChoice == 0) {
-                startMenu();
+
             } else if (userChoice <= response.getElementOfOperation().size()) {
                 Response<Course, String> selectedCourse = api.getCourseInfo(response.getElementOfOperation().get(userChoice - 1).getId());
                 courseMenu(selectedCourse.getElementOfOperation());
@@ -97,7 +96,6 @@ public class UserMenu {
             }
         } else {
             cont.message.printErrorMessage(response.getDescription());
-            startMenu();
         }
     }
 
