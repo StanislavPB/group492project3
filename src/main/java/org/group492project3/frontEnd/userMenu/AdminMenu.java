@@ -86,6 +86,8 @@ public class AdminMenu {
     }
 
     private void findCourseByName() {
+        boolean tryAgain = true;
+        boolean tryAgain1 = true;
         Response<List<Course>, String> requestResult = api.getCourseByName(cont.userInput.getString("Enter course name:"));
         if (requestResult.getStatusOfOperation()) {
             for (int i = 0; i < requestResult.getElementOfOperation().size(); i++) {
@@ -93,26 +95,32 @@ public class AdminMenu {
             }
         } else {
             cont.message.printErrorMessage(requestResult.getDescription());
-            cont.decor.printDecoratedMenu("1.Try again.;0.Go back.", "");
-            int userChoice = cont.userInput.getInt();
-            if (userChoice == 0) {
-                goToAdminMenu();
-            } else if (userChoice == 1) {
-                findCourseByName();
-            } else {
-                goToAdminMenu();//!!!!!add
+            while (tryAgain) {
+                cont.decor.printDecoratedMenu("1.Try again.;0.Go back.", "");
+                int userChoice = cont.userInput.getInt();
+                if (userChoice == 0) {
+                    tryAgain = false;
+                    goToAdminMenu();
+                } else if (userChoice == 1) {
+                    findCourseByName();
+                } else {
+                    goToAdminMenu();
+                }
             }
         }
-        cont.decor.printDecoratedMenu(" Enter number of course for editing.;0.Go to admin menu.", "");
-        int userChoice = cont.userInput.getInt();
-        if (userChoice == 0) {
-            goToAdminMenu();
-        } else if (userChoice - 1 < requestResult.getElementOfOperation().size()) {
-            courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));
-        } else {
-            cont.message.printErrorMessage("Incorrect input.");
+        while (tryAgain1) {
+            cont.decor.printDecoratedMenu(" Enter number of course for editing.;0.Go to admin menu.", "");
+            int userChoice = cont.userInput.getInt();
+            if (userChoice == 0) {
+                tryAgain1 = false;
+                goToAdminMenu();
+            } else if (userChoice - 1 < requestResult.getElementOfOperation().size()) {
+                tryAgain1 = false;
+                courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));
+            } else {
+                cont.message.printErrorMessage("Incorrect input.");
+            }
         }
-        findCourseByName();
     }
     //! change
 
@@ -125,20 +133,24 @@ public class AdminMenu {
         } else {
             cont.message.printErrorMessage(requestResult.getDescription());
         }
-        cont.decor.printDecoratedMenu("№.Enter number of course for editing.;0.Go to admin menu.", "");
-        int userChoice = cont.userInput.getInt();
-        if (userChoice == 0) {
-            goToAdminMenu();
-        } else if (userChoice <= requestResult.getElementOfOperation().size()) {
-            courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));
-        } else {
-            cont.message.printErrorMessage("Incorrect input.");
+        boolean tryAgain = true;
+        while (tryAgain) {
+            cont.decor.printDecoratedMenu("№.Enter number of course for editing.;0.Go to admin menu.", "");
+            int userChoice = cont.userInput.getInt();
+            if (userChoice == 0) {
+                tryAgain = false;
+                goToAdminMenu();
+            } else if (userChoice <= requestResult.getElementOfOperation().size()) {
+                courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));//!sadasdad
+                tryAgain = false;
+            } else {
+                cont.message.printErrorMessage("Incorrect input.");
+            }
         }
-        getCoursesList();//! переделать
     }
 
     private void courseMenu(Course course) {
-        cont.decor.printDecoratedMenu("1.List of course students.;2.Show course materials.;3.Show test list for course.;4.Edit name of course.;5.Delete this course.;0.Go back.;00.Go to admin menu.", "COURSE MENU");
+        cont.decor.printDecoratedMenu("1.List of course students.;2.Show course materials.;3.Show test list for course.;4.Edit name of course.;5.Delete this course.;0.Go back.", "COURSE MENU");
         String userChoice = cont.userInput.getString();
         switch (userChoice) {
             case "1": {
