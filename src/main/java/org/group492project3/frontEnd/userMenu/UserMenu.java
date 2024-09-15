@@ -59,13 +59,37 @@ public class UserMenu {
     }
 
     private void getCourseList() {
+    /*
         Student studentForSearching = api.getStudentById(userData.getUserId());
         Response<List<Course>, String> listCoursesResponse = api.getAvailableCourseListForStudent(studentForSearching);
         if (listCoursesResponse.getStatusOfOperation()) {
             for (int i = 0; i < listCoursesResponse.getElementOfOperation().size(); i++) {
                 System.out.println(cont.decor.getRedText(i + 1 + "") + "." + listCoursesResponse.getElementOfOperation().get(i));
             }
+*/
+        boolean tryAgain = true;
+        Response<List<Course>, String> response = null;//api.getAvailableCoursListForCurrentStudent();
+        if (response.getStatusOfOperation()) {
+            for (int i = 0; i < response.getElementOfOperation().size(); i++) {
+                System.out.println(cont.decor.getRedText(i + 1 + "") + "." + response.getElementOfOperation().get(i).getName());
+            }
+            while (tryAgain) {
+                cont.decor.printDecoratedMenu("№.Enter the course number you wish to enroll in.;0.Go to main menu.", "");
+                int userChoice = cont.userInput.getInt();
+                if (userChoice == 0) {
+                    tryAgain = false;
+                    startMenu(userData);
+                } else if (userChoice - 1 < response.getElementOfOperation().size()) {
+
+                }
+            }
+
+
+        } else {
+            cont.message.printErrorMessage(response.getDescription());
         }
+
+
     }
 
     private void getMyCoursesList() {

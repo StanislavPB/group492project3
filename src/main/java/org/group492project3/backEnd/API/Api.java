@@ -89,6 +89,13 @@ public class Api {
         return cont.courseService.renameCourse(id, name);
     }
 
+    public Response<String, String> enrollInTheCourse(int studentId, int courseId) {
+        Response<Course, String> course = cont.courseService.findById(courseId);
+        Response<Student, String> student = cont.studentService.findById(studentId);
+        cont.courseService.addNewStudentToCourse(course.getElementOfOperation(), student.getElementOfOperation());
+        return new Response(null, true, "");
+    }
+
     public Response<Course, String> deleteCourse(Integer id) {
         return cont.courseService.deleteCourse(id);
     }
