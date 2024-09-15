@@ -22,7 +22,7 @@ public class CourseService {
 
     public Response<Course, String> addNewCourse(String courseName) {
 
-        String validationResult = validation.validateCourseName(courseName);
+        String validationResult = validation.validateCourseName(courseName, repository.findAllCourses());
 
         if (!validationResult.isEmpty()) {
             return new Response<>(null, false, validationResult);
