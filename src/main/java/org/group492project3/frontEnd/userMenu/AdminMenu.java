@@ -55,7 +55,7 @@ public class AdminMenu {
                 case 0 -> {
                     break;
                 }
-                error("Incorrect input");
+                default -> error("Incorrect input");
             }
         }
     }
