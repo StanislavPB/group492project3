@@ -33,23 +33,14 @@ public class UserMenu {
         boolean running = true;
         while (running) {
             cont.decor.printDecoratedMenu("1.Sign up for new course.;2.Get a list of my courses.;0.Log out.", "STUDENT MENU");
-            int userChoice = cont.userInput.getInt();
-            switch (userChoice) {
-                case 1: {
-                    getCourseList();
-                    break;
-                }
-                case 2: {
-                    getMyCoursesList();
-                    break;
-                }
-                case 0: {
+            switch (cont.userInput.getInt()) {
+                case 1 -> getCourseList();
+                case 2 -> getMyCoursesList();
+                case 0 -> {
                     running = false;
                 }
-                default: {
+                default -> {
                     cont.message.printErrorMessage("Incorrect input");
-                    tryAgainMenu();
-                    break;
                 }
             }
         }
@@ -100,27 +91,16 @@ public class UserMenu {
 
     private void courseMenu(Course currentCourse) {
         cont.decor.printDecoratedMenu("1.Materials of course.;2.Test result.;3.Start course test.;0.Go to main menu.", "COURSE MENU");
-        int userChoice = cont.userInput.getInt();
-        if (userChoice == 0) {
-            startMenu();
-        } else if (userChoice <= 3) {
-            switch (userChoice) {
-                case 1: {
-                    getMaterialsForCurrentCourse(currentCourse);
-                    break;
-                }
-                case 2: {
-                    getTestResults(currentCourse);
-                    break;
-                }
-                case 3: {
-                    startTestForCurrentCourse(currentCourse);
-                    break;
-                }
+        switch (cont.userInput.getInt()) {
+            case 1 -> getMaterialsForCurrentCourse(currentCourse);
+            case 2 -> getTestResults(currentCourse);
+            case 3 -> startTestForCurrentCourse(currentCourse);
+            case 0 -> {
+                break;
             }
-        } else {
-            cont.message.printErrorMessage("Incorrect input.Try again.");
-            startMenu();
+            default -> {
+                cont.message.printErrorMessage("Incorrect input. Try again.");
+            }
         }
     }
 
@@ -149,8 +129,7 @@ public class UserMenu {
         List<EducationalMaterials> materials = course.getEducationalMaterialsList();
         if (materials != null) {
             for (EducationalMaterials element : materials) {
-                System.out.println(element.getMaterialType());
-                System.out.println(element.getMaterialDescription());
+                System.out.println(element.getMaterialType()+"\n"+element.getMaterialDescription());
             }
         } else {
             cont.message.printErrorMessage("Materials for the course is empty.");
@@ -178,23 +157,6 @@ public class UserMenu {
         } else {
             cont.message.printErrorMessage(testResults.getDescription());
             courseMenu(course);
-        }
-    }
-
-    private void tryAgainMenu() {
-        cont.decor.printDecoratedMenu("1.Try again.;0.Go back.", "");
-        int userChoice = cont.userInput.getInt();
-        switch (userChoice) {
-            case 1: {
-                startMenu();
-            }
-            case 0: {
-                break;
-            }
-            default: {
-                cont.message.printErrorMessage("Incorrect input. Try again.");
-                tryAgainMenu();
-            }
         }
     }
 }
