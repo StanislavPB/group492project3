@@ -38,7 +38,7 @@ public class AdminMenu {
                 case 3 -> getCoursesList();
                 case 4 -> addDataForTesting();
                 case 0 -> running = false;
-                default -> cont.message.printErrorMessage("Incorrect input. Try again.");
+                default -> error("Incorrect input. Try again.");
             }
         }
     }
@@ -48,14 +48,14 @@ public class AdminMenu {
         if (response.getStatusOfOperation()) {
             cont.message.printSuccessMessage("New course was successfully created.");
         } else {
-            cont.message.printErrorMessage(response.getDescription());
+            error(response.getDescription());
             cont.decor.printDecoratedMenu("1.Try again.;0.Exit.", "");
             switch (cont.userInput.getInt()) {
                 case 1 -> newCourseMenu();
                 case 0 -> {
                     break;
                 }
-                default -> cont.message.printErrorMessage("Incorrect input");
+                error("Incorrect input");
             }
         }
     }
@@ -69,7 +69,7 @@ public class AdminMenu {
                 System.out.println(i + 1 + "." + requestResult.getElementOfOperation().get(i).getName());
             }
         } else {
-            cont.message.printErrorMessage(requestResult.getDescription());
+            error(requestResult.getDescription());
             while (tryAgain) {
                 cont.decor.printDecoratedMenu("1.Try again.;0.Go back.", "");
                 int userChoice = cont.userInput.getInt();
@@ -79,7 +79,7 @@ public class AdminMenu {
                 } else if (userChoice == 1) {
                     findCourseByName();
                 } else {
-                    cont.message.printErrorMessage("Incorrect input.");
+                    error("Incorrect input.");
                 }
             }
             while (tryAgain1) {
@@ -91,12 +91,11 @@ public class AdminMenu {
                     tryAgain1 = false;
                     courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));
                 } else {
-                    cont.message.printErrorMessage("Incorrect input.");
+                    error("Incorrect input.");
                 }
             }
         }
     }
-    //! change
 
     private void getCoursesList() {
         Response<List<Course>, String> requestResult = api.getCoursesList();
@@ -105,7 +104,7 @@ public class AdminMenu {
                 System.out.println(cont.decor.getRedText(i + 1 + "") + "." + requestResult.getElementOfOperation().get(i).getName());
             }
         } else {
-            cont.message.printErrorMessage(requestResult.getDescription());
+            error(requestResult.getDescription());
         }
         boolean tryAgain = true;
         while (tryAgain) {
@@ -114,48 +113,40 @@ public class AdminMenu {
             if (userChoice == 0) {
                 tryAgain = false;
             } else if (userChoice <= requestResult.getElementOfOperation().size()) {
-                courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));//!sadasdad
+                courseMenu(requestResult.getElementOfOperation().get(userChoice - 1));
                 tryAgain = false;
             } else {
-                cont.message.printErrorMessage("Incorrect input.");
+                error("Incorrect input.");
             }
         }
     }
 
     private void courseMenu(Course course) {
-        cont.decor.printDecoratedMenu("1.List of course students.;2.Show course materials.;3.Show test list for course.;4.Edit name of course.;5.Delete this course.;0.Go back.", "COURSE MENU");
-        int userChoice = cont.userInput.getInt();
-        switch (userChoice) {
-            case 1: {
-                courseStudentList(course);
+        cont.decor.printDecoratedMenu("1.List of course students.;2.Show course materials.;3.Add course materials.;4.Show test list for course.;5.Edit name of course.;6.Delete this course.;0.Go back.", "COURSE MENU");
+        switch (cont.userInput.getInt()) {
+            case 1 -> courseStudentList(course);
+            case 2 -> showCourseMaterials(course);
+            case 3 -> addMaterials(course);
+            case 4 -> showTestListForCourse(course);
+            case 5 -> editNameOfTheCourse(course);
+            case 6 -> deleteThisCourse(course);
+            case 0 -> {
                 break;
             }
-            case 2: {
-                showCourseMaterials(course);
-                break;
-            }
-            case 3: {
-                showTestListForCourse(course);
-                break;
-            }
-            case 4: {
-                editNameOfTheCourse(course);
-                break;
-            }
-            case 5: {
-                deleteThisCourse(course);
-                break;
-            }
-            case 0: {
-                break;
-            }
-
-            default: {
-                cont.message.printErrorMessage("Incorrect input");
-                newCourseMenu();
-                break;
+            default -> {
+                error("Incorrect input. Try again.");
             }
         }
+    }
+
+    private void addMaterials(Course course) {
+        Response<EducationalMaterials, String> responce = api.addMaterials(course.getId(), cont.userInput.getString("Enter type of materials:"), cont.userInput.getString("Enter materials description:"));
+        if (responce.getStatusOfOperation()) {
+            cont.message.printSuccessMessage("Materias were successfully added.");
+        } else {
+            cont.message.printSuccessMessage(responce.getDescription());
+        }
+        courseMenu(course);
     }
 
     private void deleteThisCourse(Course course) {
@@ -163,7 +154,7 @@ public class AdminMenu {
         if (deletingResponse.getStatusOfOperation()) {
             cont.message.printSuccessMessage("Course was successfully deleted.");
         } else {
-            cont.message.printErrorMessage(deletingResponse.getDescription());
+            error(deletingResponse.getDescription());
         }
     }
 
@@ -172,7 +163,7 @@ public class AdminMenu {
         if (responseResult.getStatusOfOperation()) {
             cont.message.printSuccessMessage("Name was successfully changed.");
         } else {
-            cont.message.printErrorMessage(responseResult.getDescription());
+            error(responseResult.getDescription());
         }
         courseMenu(course);
     }
@@ -182,10 +173,10 @@ public class AdminMenu {
         List<TestQuestions> testQuestions = response.getElementOfOperation();
         if (response.getStatusOfOperation()) {
             for (int i = 0; i < testQuestions.size(); i++) {
-                System.out.println(cont.decor.getRedText(i + 1 + ".") + testQuestions.get(i));
+                System.out.println(cont.decor.getRedText(i + 1 + ".") + testQuestions.get(i).getQuestion());
             }
         } else {
-            cont.message.printErrorMessage(response.getDescription());
+            error(response.getDescription());
         }
         courseMenu(course);
     }
@@ -198,7 +189,7 @@ public class AdminMenu {
                 System.out.println(cont.decor.getRedText(i + 1 + ".") + educationalMaterials.get(i));
             }
         } else {
-            cont.message.printErrorMessage(response.getDescription());
+            error(response.getDescription());
         }
         courseMenu(course);
     }
@@ -221,21 +212,25 @@ public class AdminMenu {
                 int userChoice = cont.userInput.getInt();
                 if (userChoice == 0) {
                     exit = false;
-                    courseMenu(course);
                 } else if (userChoice <= studentsFromCourse.size()) {
                     api.deleteStudentFromCourse(course, studentsFromCourse.get(userChoice - 1));
                 } else {
-                    cont.message.printErrorMessage("Incorrect input.");
+                    error("Incorrect input.");
                 }
             }
         } else {
-            cont.message.printErrorMessage("This course has no students.");
+            error("This course has no students.");
         }
         courseMenu(course);
     }
 
     private void addDataForTesting() {
         api.fillDataBaseForTesting();
-        cont.message.printSuccessMessage("Data has been added to the repository successfully.");
+        error("Data has been added to the repository successfully.");
     }
+
+    private void error(String errorText) {
+        cont.message.printSuccessMessage(errorText);
+    }
+
 }

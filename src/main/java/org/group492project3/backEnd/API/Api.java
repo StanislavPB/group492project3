@@ -19,28 +19,15 @@ public class Api {
     }
 
     public Response<LoginUserResponse, String> authorisation(String login, String password) {   //! need rewrite this method
-        Response<LoginUserResponse, String> loginResult = authService.authorization(login, password);
-        if (loginResult.getStatusOfOperation()) {
-            LoginUserResponse user = loginResult.getElementOfOperation();
-            if (user.getRole().equals("user")) {
-                return new Response<>(user, true, "");
-            } else {
-                return new Response<>(user, true, "Pass or login isn't correct.");
-            }
-        }
-        return new Response<>(null, false, loginResult.getDescription());
+        return authService.authorization(login, password);
     }
 
     public Response<Student, String> registration(String login, String password, String firstName, String secondName) {
         return cont.studentService.addStudent(firstName, secondName, login, password);
     }
 
-    public Response<List<Course>, String> getCoursesList() {  //! need rewrite this method
-        Response<List<Course>, String> courseList = cont.courseService.findAllCourses();
-        if (courseList.getStatusOfOperation() && courseList.getElementOfOperation() != null) {
-            return new Response<>(courseList.getElementOfOperation(), true, null); //plug
-        }
-        return new Response<>(null, false, "Course repository is empty.");
+    public Response<List<Course>, String> getCoursesList() {
+        return cont.courseService.findAllCourses();
     }
 
     public Response<List<Course>, String> getMyCoursesList(int studentId) {
@@ -51,7 +38,7 @@ public class Api {
         return cont.courseService.getCoursesStudentIsNotEnrolled(student);
     }
 
-    public Response<Course, String> addNewCourse(String newCourseName) {     //!  change "Course" on "Analytic"
+    public Response<Course, String> addNewCourse(String newCourseName) {
         return cont.courseService.addNewCourse(newCourseName);
     }
 
@@ -71,7 +58,6 @@ public class Api {
         return cont.courseService.getTestQuestionsToCourse(id);
     }
 
-
     public void fillDataBaseForTesting() {
         fillCourse.fillCourseJava();
     }
@@ -80,12 +66,11 @@ public class Api {
         return cont.courseService.renameCourse(id, name);
     }
 
-    public Response<String, String> enrollInTheCourse(int studentId, int courseId) {
+    public void enrollInTheCourse(int studentId, int courseId) {
         Response<Course, String> course = cont.courseService.findById(courseId);
         Response<Student, String> student = cont.studentService.findById(studentId);
         cont.courseService.addNewStudentToCourse(course.getElementOfOperation(), student.getElementOfOperation());
         cont.studentService.addCourse(student.getElementOfOperation(), course.getElementOfOperation());
-        return new Response<>(null, true, "");
     }
 
     public Response<Course, String> deleteCourse(Integer id) {
@@ -106,6 +91,11 @@ public class Api {
 
     public Response<TestResult, String> addTestResult(int courseId, int studentId, List<TestQuestions> questionsList, List<Integer> answersList) {
         return cont.testResultService.addTestResult(courseId, studentId, questionsList, answersList);
+    }
+
+
+    public Response<EducationalMaterials,String> addMaterials(int idOfCourse, String materialType, String materialDescription){
+        return cont.educationalMaterialsService.addMaterial(idOfCourse,materialType,materialDescription);
     }
 
     public Response<Double, String> getBestTestResultForStudentInTheCourse(Integer courseId, Integer studentId) {

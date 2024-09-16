@@ -72,8 +72,5 @@ public class TestResultService {
             }
             return new Response<>(bestPercent, true, "");
         }
-
     }
-
-
 }
