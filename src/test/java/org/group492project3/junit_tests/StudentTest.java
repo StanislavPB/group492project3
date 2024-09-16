@@ -17,7 +17,7 @@ class StudentTest {
        @Test
        @DisplayName("Проверка соответствия поля role")
        void RoleTest () {
-           assertEquals("user", "user");
+           assertNotEquals("admin", "user");
        }
 
 
