@@ -142,6 +142,7 @@ public class AdminMenu {
     private void addMaterials(Course course) {
         Response<EducationalMaterials, String> responce = api.addMaterials(course.getId(), cont.userInput.getString("Enter type of materials:"), cont.userInput.getString("Enter materials description:"));
         if (responce.getStatusOfOperation()) {
+            api.addMaterialsToCourse(course, responce.getElementOfOperation());
             cont.message.printSuccessMessage("Materias were successfully added.");
         } else {
             cont.message.printSuccessMessage(responce.getDescription());
@@ -230,7 +231,6 @@ public class AdminMenu {
     }
 
     private void error(String errorText) {
-        cont.message.printSuccessMessage(errorText);
+        cont.message.printErrorMessage(errorText);
     }
-
 }

@@ -94,8 +94,12 @@ public class Api {
     }
 
 
-    public Response<EducationalMaterials,String> addMaterials(int idOfCourse, String materialType, String materialDescription){
-        return cont.educationalMaterialsService.addMaterial(idOfCourse,materialType,materialDescription);
+    public Response<EducationalMaterials, String> addMaterials(int idOfCourse, String materialType, String materialDescription) {
+        return cont.educationalMaterialsService.addMaterial(idOfCourse, materialType, materialDescription);
+    }
+
+    public void addMaterialsToCourse(Course course ,EducationalMaterials educationalMaterials) {
+        cont.courseService.addEducationalMaterialsToCourse(course, educationalMaterials);
     }
 
     public Response<Double, String> getBestTestResultForStudentInTheCourse(Integer courseId, Integer studentId) {
