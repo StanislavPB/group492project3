@@ -55,7 +55,7 @@ public class AdminMenu {
                 case 0 -> {
                     break;
                 }
-                default -> error("Incorrect input");
+                error("Incorrect input");
             }
         }
     }
@@ -200,7 +200,13 @@ public class AdminMenu {
         if (!studentsFromCourse.isEmpty()) {
             while (exit) {
                 for (int i = 0; i < studentsFromCourse.size(); i++) {
-                    System.out.println(cont.decor.getRedText(i + 1 + "") + "." + studentsFromCourse.get(i).getFirstName() + " " + studentsFromCourse.get(i).getLastName());
+                    Response<Double, String> bestTestResult = api.getBestTestResultForStudentInTheCourse(course.getId(), studentsFromCourse.get(i).getId());
+                    if (bestTestResult.getStatusOfOperation()) {
+                        System.out.println(cont.decor.getRedText(i + 1 + "") + "." + studentsFromCourse.get(i).getFirstName() + " " + studentsFromCourse.get(i).getLastName() + " " + cont.decor.getGreenText(bestTestResult.getElementOfOperation() + "") + cont.decor.getRedText("%"));
+                    } else {
+                        System.out.println(cont.decor.getRedText(i + 1 + "") + "." + studentsFromCourse.get(i).getFirstName() + " " + studentsFromCourse.get(i).getLastName() + " " + cont.decor.getRedText(bestTestResult.getDescription()));
+                    }
+
                 }
                 cont.decor.printDecoratedMenu("№.Enter student number for deleting.;0.Go back", "");
                 int userChoice = cont.userInput.getInt();

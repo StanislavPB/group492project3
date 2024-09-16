@@ -82,7 +82,7 @@ public class UserMenu {
                 courseMenu(selectedCourse.getElementOfOperation());
             } else {
                 cont.message.printErrorMessage("Incorrect input.Try again.");
-                getMyCoursesList();
+                getMyCoursesList();//!!!!--------------------------------
             }
         } else {
             cont.message.printErrorMessage(response.getDescription());
@@ -147,12 +147,11 @@ public class UserMenu {
             cont.decor.printDecoratedMenu("1.Try again.;0.Go to course menu.", "");
             int userChoice = cont.userInput.getInt();
             if (userChoice == 0) {
-                courseMenu(course);
+                return;
             } else if (userChoice == 1) {
                 startTestForCurrentCourse(course);
             } else {
                 cont.message.printErrorMessage("Incorrect input.");
-                getTestResults(course);
             }
         } else {
             cont.message.printErrorMessage(testResults.getDescription());

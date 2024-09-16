@@ -93,7 +93,12 @@ public class Api {
         return cont.testResultService.addTestResult(courseId, studentId, questionsList, answersList);
     }
 
+
     public Response<EducationalMaterials,String> addMaterials(int idOfCourse, String materialType, String materialDescription){
         return cont.educationalMaterialsService.addMaterial(idOfCourse,materialType,materialDescription);
+    }
+
+    public Response<Double, String> getBestTestResultForStudentInTheCourse(Integer courseId, Integer studentId) {
+        return cont.testResultService.getBestTestingResultsForStudentCourse(courseId, studentId);
     }
 }
